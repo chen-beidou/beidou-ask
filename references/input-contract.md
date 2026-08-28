@@ -33,9 +33,9 @@ Treat supplied dialogue as immutable source text. Record authorized dialogue rew
 
 ## Asset anchors
 
-Use `@Name（6—20 Chinese-character anchor）` the first time an asset appears in each independently generated Clip. Keep one to three visually distinctive traits. Later mentions use only the asset name.
+Default assumption: **every named asset has a reference image**. Anchor with the bare `@Name` the first time it appears in each independently generated Clip; later mentions use only the name. Never write appearance descriptions for named assets — the reference image owns appearance, and the prompt carries only action, expression, posture, and state.
 
-If no visual description exists, use the bare `@Name` and mark it as missing in the asset card. For pure scripts, inferred appearance gets no more than two traits and the asset card says `外观为推断`.
+Only when the user explicitly says an asset has no reference image may the anchor carry at most two inferred traits, and the asset card says `外观为推断`.
 
 Do not create image-generation prompts, fake uploaded assets, or invented formal state-asset names.
 

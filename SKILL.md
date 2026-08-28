@@ -31,8 +31,8 @@ Read only the references needed for the current request:
 - For episodic or long-running projects, also read [references/project-continuity.md](references/project-continuity.md).
 - For dialogue, overlap, breath, silence, music, or sound-led cuts, read [references/sound-direction.md](references/sound-direction.md).
 - For Seedance, read [references/seedance-adapter.md](references/seedance-adapter.md).
-- For Wan 3.0, read [references/wan-3.0-adapter.md](references/wan-3.0-adapter.md).
-- For MiniMax H3, read [references/minimax-h3-adapter.md](references/minimax-h3-adapter.md).
+- For Wan 3.0, read [references/wan-3.0-adapter.md](references/wan-3.0-adapter.md) and [references/model-defect-compensation.md](references/model-defect-compensation.md).
+- For MiniMax H3, read [references/minimax-h3-adapter.md](references/minimax-h3-adapter.md) and [references/model-defect-compensation.md](references/model-defect-compensation.md).
 - For any other model, preserve the core scene design and use only user-supplied or verified constraints; never transfer another model's limits by analogy.
 - For failed generations or revision requests, read [references/failure-repair.md](references/failure-repair.md) and repair the narrowest responsible layer.
 - Before final rendering, read [references/output-schema.md](references/output-schema.md).
@@ -41,7 +41,7 @@ Read only the references needed for the current request:
 ## Core workflow
 
 1. Normalize inputs: model, duration, aspect ratio, medium, scene type, relationship, objective, opposition, outcome, assets, dialogue, sound, and delivery format.
-2. Create short asset anchors only for supplied or story-required assets. Mark inferred appearance as inferred; never generate art-asset prompts.
+2. Create short asset anchors only for supplied or story-required assets. Assume every named asset has a reference image: anchor with the bare `@Name`, no appearance descriptions in prompts. Only describe appearance (≤2 traits, marked inferred) when the user explicitly says an asset has no reference. Never generate art-asset prompts.
 3. Build the causal scene spine internally: objective → pressure → resistance → leak/impact → counteraction → changed state.
 4. For acting scenes, distinguish surface mask, underlying emotion, relationship goal, trigger, physiological leak, control strategy, speech behavior, listener response, and new relationship state.
 5. Establish spatial power, eyeline axis, screen direction, key props, and starting state before listing shots.
@@ -60,6 +60,8 @@ Read only the references needed for the current request:
 - Do not cross the axis without a neutral shot or visible continuous camera move establishing the new relation.
 - Preserve character identity, side, hand use, prop ownership, wounds, wardrobe, light, gaze, breath intensity, and emotional exposure across cuts and Clips.
 - 9:16 is recomposed in depth and height; never describe it as a crop of 16:9.
+- For off-screen narration (OS/VO) over a visible character, the shot or constraint block must state closed-mouth, no-lip-movement explicitly (`嘴巴自然闭合，无口型，无说话动作`); on MiniMax H3, narration never goes into a dialogue block.
+- On Wan 3.0, one complete action unit per shot with an explicit bottom-up load chain; compensate defects in the prompt — never work around them by avoiding the model.
 - Do not promise exact model obedience or claim visual success without inspecting the generated result.
 
 ## Output contract

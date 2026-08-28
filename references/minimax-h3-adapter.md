@@ -17,4 +17,8 @@ Use this profile only when the user selects MiniMax H3. Do not confuse it with M
 5. Prefer compact causal actions and explicit ending state over long camera-specification stacks.
 6. Use timestamps as structured intent, not a promise of frame-accurate execution.
 
+## Field-verified defect (user-paid generations, 2026-08)
+
+- Off-screen narration (OS/VO) makes visible characters mouth speech. Compensate: name the character and state `嘴巴自然闭合，无口型，无说话动作` inside the shot or constraint block. Off-screen narration must never be placed in a `<d>` dialogue block — that block commands on-screen speech; route narration through the soundscape/narration field. See [model-defect-compensation.md](model-defect-compensation.md).
+
 Render the delivery label as `MiniMax H3`.

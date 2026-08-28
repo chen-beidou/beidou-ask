@@ -3,9 +3,19 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const file = process.argv[2];
+const argLines = process.argv.slice(2);
+let file = null;
+let scriptPath = null;
+for (let i = 0; i < argLines.length; i += 1) {
+  if (argLines[i] === "--script") {
+    scriptPath = argLines[i + 1];
+    i += 1;
+  } else if (!file) {
+    file = argLines[i];
+  }
+}
 if (!file) {
-  console.error("Usage: node validate-storyboard.mjs <storyboard.md>");
+  console.error("Usage: node validate-storyboard.mjs <storyboard.md> [--script <script.txt>]");
   process.exit(2);
 }
 
@@ -13,6 +23,19 @@ const resolved = path.resolve(file);
 if (!fs.existsSync(resolved)) {
   console.error(`File not found: ${resolved}`);
   process.exit(2);
+}
+
+const PUNCT = /[\s，。！？、；：“”‘’…—,.!?;:'"()（）\-]/g;
+const strip = (s) => s.replace(PUNCT, "");
+
+let scriptNorm = null;
+if (scriptPath) {
+  const scriptResolved = path.resolve(scriptPath);
+  if (!fs.existsSync(scriptResolved)) {
+    console.error(`Script file not found: ${scriptResolved}`);
+    process.exit(2);
+  }
+  scriptNorm = strip(fs.readFileSync(scriptResolved, "utf8"));
 }
 
 const source = fs.readFileSync(resolved, "utf8");
@@ -79,7 +102,7 @@ clips.forEach((clip, index) => {
 
     const lineDuration = current.end - current.start;
     for (const dialogue of current.line.matchAll(/：“([^”]+)”/g)) {
-      const characters = [...dialogue[1].replace(/[\s，。！？、；：“”‘’…—,.!?;:'"-]/g, "")].length;
+      const characters = [...dialogue[1].replace(PUNCT, "")].length;
       if (characters > lineDuration * 5.2) {
         warnings.push(`${label} 镜头${current.number}: dialogue may be too long (${characters} chars in ${lineDuration.toFixed(1)}s)`);
       }
@@ -108,6 +131,38 @@ clips.forEach((clip, index) => {
   const usedAssets = new Set([...body.matchAll(/@[\p{L}\p{N}_-]+(?=（|\s)/gu)].map((m) => m[0]));
   for (const asset of usedAssets) {
     if (!definedAssets.has(asset)) warnings.push(`${label}: asset ${asset} is used but not defined in the asset card`);
+  }
+
+  // Model-defect compensation gates (field-verified, 2026-08).
+  // Gate: off-screen narration must carry an explicit closed-mouth constraint,
+  // otherwise Wan 3.0 / MiniMax H3 make visible characters mouth the words.
+  if (/(画外音|旁白|VO|OS)/.test(descriptor) || /(画外音|旁白|VO|OS)/.test(body)) {
+    if (!/(嘴巴|口型|闭合|闭口|不说话)/.test(body)) {
+      warnings.push(`${label}: off-screen narration referenced but no closed-mouth constraint (嘴巴自然闭合，无口型) — Wan 3.0/H3 will mouth the words`);
+    }
+  }
+
+  // Gate: action clips must carry load-chain vocabulary, otherwise Wan 3.0
+  // fight choreography degrades into unreadable flailing.
+  if (/(动作|打斗|追逐|武打)/.test(descriptor) && !/(承力|接触|受力|蹬地|位移|踉跄|站稳)/.test(body)) {
+    warnings.push(`${label}: action clip lacks load-chain vocabulary (蹬地/接触/受力/位移/恢复) — Wan 3.0 fights degrade without it`);
+  }
+
+  // Gate: clip-level dialogue capacity (≈4–5 Chinese chars/sec before pauses).
+  const dialogueLines = [...body.matchAll(/：“([^”]+)”/g)].map((m) => m[1]);
+  const totalDialogueChars = dialogueLines.reduce((n, d) => n + [...d.replace(PUNCT, "")].length, 0);
+  if (totalDialogueChars > clip.duration * 5.2) {
+    warnings.push(`${label}: total dialogue ${totalDialogueChars} chars exceeds comfortable capacity for ${clip.duration}s`);
+  }
+
+  // Gate: verbatim dialogue reconciliation against the script (when provided).
+  if (scriptNorm) {
+    for (const d of dialogueLines) {
+      const normalized = strip(d);
+      if (normalized && !scriptNorm.includes(normalized)) {
+        errors.push(`${label}: dialogue not found verbatim in script: "${d.slice(0, 24)}…"`);
+      }
+    }
   }
 });
 

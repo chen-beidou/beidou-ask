@@ -22,3 +22,9 @@ Use this profile only when the user selects Wan 3.0. Treat hosted-product limits
 ## Compression and risk control
 
 Prefer fewer complete action units over dense cut counts. Concentrate constraints on identity, hand/prop ownership, screen direction, contact, and ending state. If the chosen Wan interface exposes different duration or asset limits, follow the interface and note the assumption in `生成前提醒`.
+
+## Field-verified defects (user-paid generations, 2026-08)
+
+- **Prompt weight > reference image.** Any appearance description in the prompt overrides the supplied reference image's look. For every character/asset with a supplied reference, anchor with the bare `@Name` only — no appearance traits in the prompt; the reference image owns appearance, and the prompt carries only action, expression, posture, and state. See [input-contract.md](input-contract.md) asset anchors.
+- Fight scenes degrade into unreadable flailing when a Clip packs in multi-exchange choreography. Compensate: one complete action unit per shot, explicit bottom-up load chain (蹬地→转腰→接触→位移→恢复), stable or slow-push camera during exchanges. See [model-defect-compensation.md](model-defect-compensation.md).
+- Off-screen narration (OS/VO) makes visible characters mouth speech. Compensate: name the character and state `嘴巴自然闭合，无口型，无说话动作` inside the shot or constraint block. See [model-defect-compensation.md](model-defect-compensation.md).

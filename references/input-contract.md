@@ -22,6 +22,7 @@ delivery_format
 
 ## Priority
 
+0. User-stored preference (project memory / CLAUDE.md): default 画幅, 时长, 风格, 节奏, 语言.
 1. Explicit current-turn choices.
 2. Supplied assets and established project continuity.
 3. Existing script facts.

@@ -38,6 +38,17 @@ Enable a special style only when the story requires one, and state its exact sho
 
 Professional audiovisual terms use `中文（English）` on first use within each Clip only. Aperture and focal annotations stay Chinese when used, but are optional and reserved for functionally important shots.
 
+### Per-shot writing rules
+
+- **One primary camera move per shot.** Pick it from `camera-vocabulary.md` by the emotion it must produce; layer at most one micro-adjustment. Never stack moves.
+- **Keyword weight order.** The model leans on the first 30–40% of tokens. Write each shot as: 主体 + 动作 → 机位/镜头运动/景别 → 光影 → 风格收尾. Push style modifiers to the end, do not lead with them.
+- **Three-detail check.** Each shot needs one 环境压力 + one 身体微动作 + one 声音锚点 (see `emotion-performance.md`). Zero in a row → fix the shot.
+- **Final frame.** End each shot on a destination image, not an ambiguous state (see `emotion-performance.md`).
+
+### 9:16 recomposition
+
+For 9:16, write the 空间站位 to show depth and height — 一高一低、一前一后、遮挡、台阶、玻璃对位 — never as a crop of 16:9. Safe-zone margins (top 8% / bottom 15% / right 12%) are a note, subordinate to the vertical staging.
+
 For two durations or ratios, share asset/style sections once and label variants clearly. Each ratio gets its own spatial block and materially different composition.
 
 ## 4. 生成前提醒

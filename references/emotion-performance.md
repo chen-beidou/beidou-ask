@@ -59,3 +59,20 @@ Escalate through different channels rather than repeating the same reaction.
 ## Listener causality
 
 The listener must perceive or misread a leak and change behavior. A reaction shot that changes nothing is decorative. Valid changes include softening pressure, interrupting, withdrawing, moving closer, surrendering a prop, or exploiting weakness.
+
+## Show, don't tell (three-detail check)
+
+The model renders bodies, not feelings. Never write an emotion word alone — translate it into three physical facts. Before shipping any shot, it must carry **at least one** from each row. If a shot has a zero, fix the shot:
+
+| Check | Must have one of |
+|---|---|
+| 环境压力 | 光的来源/天气/表面质感/风/温度带来的身体反应 |
+| 身体微动作 | 下巴绷紧、吞咽、手指收进掌心、呼吸停一拍、重心后移、视线下移 |
+| 声音锚点 | 一句具体声响：衣物摩擦、脚步、金属"咔"、吞咽、远处可命名的环境声 |
+
+> 坏例：`她感到孤独。` → 好例：`镜头压在她视线空白一侧。她指腹刮过旧桌沿，一下，两下；窗外雨把灯牌字冲得发糊。`
+
+## Final-frame rule
+
+Each shot must end on a clear **destination image** — the model treats the ending as the emotional point it lands on. Write the last thing the audience sees, not just the last action. If the ending is ambiguous ("人物站着"), give it a destination ("人物背对镜头走进光里，身后灯火一盏盏灭").
+

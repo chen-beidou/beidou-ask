@@ -63,6 +63,8 @@ if (clips.length === 0) {
 const assetCard = source.slice(0, clips[0]?.start ?? source.length);
 const definedAssets = new Set([...assetCard.matchAll(/\|\s*(@[\p{L}\p{N}_-]+)\s*\|/gu)].map((m) => m[1]));
 
+const clipDurable = [];
+
 clips.forEach((clip, index) => {
   const end = index + 1 < clips.length ? clips[index + 1].start : source.length;
   const body = source.slice(clip.bodyStart, end);
@@ -125,6 +127,33 @@ clips.forEach((clip, index) => {
     warnings.push(`${label}: 9:16 composition lacks explicit depth, height, or safe-area staging`);
   }
 
+  // Correctness gate: the 空间站位 block itself must state a screen-side / spatial relation.
+  // Scoped to the block (not the whole body) so a word like "坐下" cannot satisfy it.
+  const spatialMatch = body.match(/^空间站位：(.+)$/m);
+  const spatialText = spatialMatch ? spatialMatch[1].slice(0, 120) : "";
+  const spatialRe = /(左右|前后|上下|一侧|对面|居中|中央|中间|角落|门口|窗口|床边|桌前|楼梯|台阶|前景|后景|纵深|较高|较低|上部|下部|朝向|面向|位于|站在|坐在|立于|蹲|俯视|仰视|贴着|靠着|正前|下缘|上缘|低位|高处|远处|近处)/;
+  if (!spatialText) {
+    errors.push(`${label}: missing 空间站位 block`);
+  } else if (!spatialRe.test(spatialText)) {
+    errors.push(`${label}: 空间站位 lacks an explicit screen-side/spatial relation (左右/前后/一侧/纵深/窗前/高处/正前) — position cannot be verified`);
+  }
+
+  // Correctness gate: each independently generated Clip must re-affirm durable state
+  // (identity / wardrobe / limb / injury). The model has no memory between generations.
+  const durableRe = /(服装|衣|面具|义体|右臂|左臂|左眼|脊椎|伤口|染血|血迹|破损|新伤|断|制服)/g;
+  const durableHits = [...body.matchAll(durableRe)].map((m) => m[0]);
+  if (durableHits.length === 0) {
+    warnings.push(`${label}: no explicit durable-state restatement (identity/wardrobe/limb/injury) — confirm @character unchanged across clips`);
+  }
+  clipDurable.push({ label, body, durable: [...new Set(durableHits)] });
+
+  // Correctness gate: movement clips must carry direction / path-continuity vocabulary,
+  // otherwise a trajectory can silently reverse or teleport between shots.
+  if (/(走|跑|转身|行|移|追逐|追击|扑|跃|起|坐起|站起|坠落|挥|踢|掌|拳|抓住|倒退|退出|翻)/.test(body) &&
+      !/(位移|方向|轨迹|出画|入画|接续|从.+到|走向|移动到|顺着|滑向|退回|翻身|跨过|向.+走)/.test(body)) {
+    warnings.push(`${label}: movement present but no direction/path continuity vocabulary (方向/位移/接续/出入画) — trajectory may break across cuts`);
+  }
+
   // Only treat references with an explicit token boundary as statically checkable.
   // Chinese prose often writes `@角色A位于...` without whitespace, where a generic
   // Unicode word regex would incorrectly absorb the following sentence.
@@ -165,6 +194,19 @@ clips.forEach((clip, index) => {
     }
   }
 });
+
+// Correctness gate: durable-state drift across consecutive Clips. If Clip N ends with an
+// injury / wardrobe / limb token and Clip N+1's body never mentions it, the state likely
+// reset silently. Flag it so it can be confirmed or restated.
+for (let i = 1; i < clipDurable.length; i += 1) {
+  const prev = clipDurable[i - 1];
+  const cur = clipDurable[i];
+  for (const tok of prev.durable) {
+    if (!cur.body.includes(tok)) {
+      warnings.push(`${prev.label} → ${cur.label}: durable state "${tok}" present in previous Clip but absent in next — confirm it is not silently reset`);
+    }
+  }
+}
 
 console.log(`Validated ${clips.length} Clip(s) in ${resolved}`);
 if (warnings.length) {

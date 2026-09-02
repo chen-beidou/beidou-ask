@@ -15,6 +15,8 @@ Turn scripts, scene ideas, and existing visual assets into executable cinematic 
 - Medium: follow supplied assets; otherwise live-action realism.
 - Sound: production sound and dialogue, no music or subtitles unless requested.
 - Output language: user language; Chinese by default. Add an English term in parentheses only on its first use within each Clip.
+- Read user-stored preference (project memory / CLAUDE.md) where present: 画幅, 时长, 风格, 节奏, 语言 carry priority above built-in defaults.
+- Director style: optional. On request, apply exactly one lens from `director-styles.md` to unify the look; it never changes narrative facts or dialogue.
 
 Do not ask about routine parameters that can use these defaults. Ask one necessary question only when the central subject, relationship, or required outcome cannot be inferred without materially changing the scene.
 
@@ -26,6 +28,11 @@ Read only the references needed for the current request:
 - For emotion, acting, dialogue, confrontation, interrogation, confession, negotiation, or reconciliation, read [references/emotion-performance.md](references/emotion-performance.md), [references/dramatic-beats.md](references/dramatic-beats.md), and [references/dialogue-mode.md](references/dialogue-mode.md).
 - For fights, chases, weapons, impacts, spells, destruction, or physical comedy, read [references/dramatic-beats.md](references/dramatic-beats.md) and [references/action-mode.md](references/action-mode.md).
 - For mixed dialogue/action scenes, read both mode references and classify each Clip separately.
+- For choosing a camera movement that carries meaning, read [references/camera-vocabulary.md](references/camera-vocabulary.md).
+- For power, dominance, or relationship position in the frame, read [references/spatial-power.md](references/spatial-power.md).
+- For composition and 9:16 vertical staging, read [references/composition.md](references/composition.md).
+- For an optional director-style look, read [references/director-styles.md](references/director-styles.md) and apply it as a lens (never a rewrite).
+- For Kling prompts, read [references/kling-adapter.md](references/kling-adapter.md).
 - For 9:16, reframing, social platforms, or any aspect-ratio choice, read [references/aspect-ratio.md](references/aspect-ratio.md).
 - For multiple Clips or later-scene continuation, read [references/continuity-ledger.md](references/continuity-ledger.md).
 - For episodic or long-running projects, also read [references/project-continuity.md](references/project-continuity.md).
@@ -54,11 +61,14 @@ Read only the references needed for the current request:
 - Every Clip begins at 0 seconds and ends exactly at its declared duration; timestamps are continuous, non-overlapping, and use at most one decimal place.
 - Every Clip has exactly one spatial-position block and one ending-state block.
 - Every shot states shot size, at least one angle/view/movement descriptor, and a visible action/result or complete dialogue line. Aperture and focal length are optional direction cues, not mandatory model controls.
+- Every shot has exactly one primary camera move (chosen for the emotion it produces, per `camera-vocabulary.md`); a shot may add at most one micro-adjustment and must never stack multiple moves.
+- Every shot carries at least one 环境压力, one 身体微动作, and one 声音锚点 (three-detail check, per `emotion-performance.md`), and ends on a clear destination image.
 - Preserve every supplied dialogue line verbatim and in order. Never add, delete, paraphrase, merge, or invent dialogue unless the user explicitly authorizes rewriting. Do not split a line across shots; when it does not fit, extend or split the Clip rather than silently shortening it. Allow roughly 4–5 Chinese characters per second, then add time for silence, overlap, breath failure, or physical business.
 - Dialogue mode: 15 seconds usually 5–8 shots; 30 seconds usually 8–12 shots.
 - Live-action action mode: 15 seconds usually 5–14 shots by density (low 5–7, standard 7–10, high 10–14); 30 seconds scales by causal units rather than mechanically doubling shots.
 - Do not cross the axis without a neutral shot or visible continuous camera move establishing the new relation.
 - Preserve character identity, side, hand use, prop ownership, wounds, wardrobe, light, gaze, breath intensity, and emotional exposure across cuts and Clips.
+- **Correctness gate (first wall, zero tolerance):** before any aesthetic choice, a Clip must pass 人物一致 / 站位不错位 / 运动轨迹连贯 / 不穿帮 / 视线动作轴 across every cut and every Clip. Order these as rigid facts, not as style. If a shot would break identity, position, direction of movement, prop or injury state, or the 180° axis, rewrite the shot — never film it for the look. Aesthetic language (camera, composition, emotion) is the second wall and is only layered on once the first holds.
 - 9:16 is recomposed in depth and height; never describe it as a crop of 16:9.
 - For off-screen narration (OS/VO) over a visible character, the shot or constraint block must state closed-mouth, no-lip-movement explicitly (`嘴巴自然闭合，无口型，无说话动作`); on MiniMax H3, narration never goes into a dialogue block.
 - On Wan 3.0, one complete action unit per shot with an explicit bottom-up load chain; compensate defects in the prompt — never work around them by avoiding the model.

@@ -52,3 +52,24 @@ A new camera angle must reveal at least one new fact:
 - changed power or decision
 
 Do not replay the same action or line simply to obtain another angle.
+
+## Shot economy
+
+One or two **well-blocked** shots beat forty angles. Do not buy coverage you do not need. Before adding a cut, ask: would moving the actors, not the camera, tell it better? Kurosawa derives tension from a single designed frame without cutting at all. When a shot reveals nothing the last shot did not, delete it.
+
+## One shot, one meaning
+
+A new camera angle must reveal **both** a new fact *and* a new emotional level. A cut is only justified when two things changed. Show both in the shot line. If only the camera changed and neither the fact nor the feeling did, the cut is decoration.
+
+## Rhythm
+
+Sequence shots so size and time alternate, not repeat. A block of same-size (all medium) or same-length clips flattens tension.
+
+- Alternate **size**: extreme close-up → wide → detail close-up → medium.
+- Vary **length**: a held 4s shot next to a snapped 0.8s cut creates pulse.
+- For a 30s Clip, escalate duration pressure: cut faster toward the reversal (around seconds 12–18), not evenly.
+- End on a held shot — a decisive last image, not a float.
+
+## Cut on action
+
+Place the cut inside a motion (a head turning, a hand pushing off, a door swinging) rather than after it. Cutting on the action hides the seam and keeps energy. Note the cut point in the shot line when it matters.

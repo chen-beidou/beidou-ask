@@ -1,20 +1,25 @@
 # Kling adapter (Kling 3.x)
 
-Use for prompts targeting Kling 3.0 Turbo / Omni. Structure and syntax differ from Seedance: Kling is **camera-first** and speaks a compact, comma-separated film-crew shorthand.
+<!-- RULE:LANGUAGE.CONTRACT -->
+<!-- RULE:MODEL.CLAIM_PROVENANCE -->
+
+Use this profile only when the selected target is a Kling 3.x interface/version confirmed by the user or current platform. Kling product surfaces can change; treat undocumented prompt-length/action-count formulas as heuristics, not capabilities.
 
 ## Prompt structure
 
+Prefer a compact causal order that keeps the subject/action unambiguous and attaches camera motion to its target. A reliable neutral scaffold is:
+
 ```
-Scene → Characters → Action → Camera → Audio
+Subject + scene → action/state change → camera/viewpoint → light/look → sound → constraints
 ```
 
-Write it as comma-separated shorthand, camera motion stated **before** the subject action (opposite of Seedance).
+If the active Kling interface or a current official guide specifies a different syntax, that interface-specific contract wins. Do not claim that camera-first ordering is universally required.
 
-## Length
+## Density
 
-- Single take: **40–80 words** (image-to-video: 20–40).
-- Under 80 words with explicit camera direction beats a long, descriptive prompt.
-- Keep 1–3 actions maximum; more than ~4–5 distinct nouns breaks it.
+- Keep one clear objective and one readable causal chain per shot or short generation unit.
+- Compress repeated appearance/style wording before removing identity, action cause, contact, result, or endpoint.
+- When subject/reference/action density becomes unreliable, split the task or use the interface’s multi-shot/reference controls. Do not enforce an undocumented word, noun, or action-count threshold.
 
 ## Camera syntax
 
@@ -26,18 +31,16 @@ Pair a movement with a target — "dollies in on her eyes", not just "dolly in" 
 
 ## Rules
 
-- **One primary camera move per shot.** Stacking moves = the model chooses chaos.
-- **State camera before action**: `Slow push in on [subject + action], [environment], [lighting], [mood].`
-- Chinese/English performs evenly (unlike Seedance/Wan's Chinese edge).
-- Best for **held single takes** and multi-shot scenes; feeds multi-shot sequences natively.
+- **One dominant camera intention per shot.** Default to one clear move or a locked camera for reliability. If a composite path is genuinely needed, stage it as one causal sentence with an explicit trigger, phase hand-off, and endpoint; do not stack unrelated moves.
+- Bind camera motion to the visible target and its action; ordering may follow the active interface rather than a universal camera-first rule.
+- Chinese and English are both usable; follow the user language and do not claim a language-performance advantage without current evidence.
 
 ## Avoid
 
-- >4–5 distinct nouns per prompt.
-- "slow motion" in the negative prompt (does nothing on Kling).
-- Stacking multiple camera moves.
-- Open-ended motion with no endpoint — always state where the shot lands.
+- Unsupported negative-prompt tricks: use only the controls and syntax exposed by the active Kling interface; do not assume a phrase is ignored without current evidence.
+- Stacking unrelated camera moves with no shared viewing task.
+- Open-ended motion without a readable endpoint when the endpoint matters to the next state; otherwise a deliberately unresolved move is allowed.
 
 ## Multi-shot sequences
 
-Combine into one scene-level prompt with explicit subject + action + lens + light kept identical across cuts so the sequence holds; keep the character identity block and environment anchor verbatim.
+For interfaces that expose multi-shot sequencing, keep identity/reference roles and durable world facts stable across cuts while allowing lens, light result, and camera viewpoint to change when the same world state justifies them. Do not repeat attributes that the interface already binds as references.

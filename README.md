@@ -25,8 +25,12 @@ Skill 的主入口是 [`SKILL.md`](SKILL.md)。
 ```text
 beidou-ask/
 ├── SKILL.md
+├── CHANGELOG.md
 ├── agents/
 │   └── openai.yaml
+├── policies/
+│   ├── canonical-rules.json
+│   └── model-claims.json
 ├── references/
 │   ├── seedance-adapter.md
 │   ├── wan-3.0-adapter.md

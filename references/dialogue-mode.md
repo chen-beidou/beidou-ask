@@ -9,17 +9,17 @@ pressure → containment → leak/deflection → listener interpretation
 → changed tactic → new spatial or relational balance
 ```
 
-Every unit must produce loss of control, new information, or a relationship change. Avoid orderly turn-taking.
+A tension unit must advance at least one meaningful state dimension — information, emotion, tactical advantage, spatial relation, physical action, or decision — and important reversals should usually advance two or more. Orderly turn-taking is allowed when the scene needs restraint; avoid it only when it flattens the conflict.
 
 ## Shot allocation
 
-- 15 seconds: usually 5–8 shots, one or two tension units.
-- 30 seconds: usually 8–12 shots, two or three tension units with a midpoint reversal.
-- Establishing view: no more than one per 15 seconds.
-- Listener reactions: no more than two consecutively.
-- Micro-action detail: one action and one visible result per detail shot.
-- A line longer than four seconds stays in one continuous shot; use a subtle push or change in focus rather than cutting the line.
+- Shot count follows performance and information load rather than a fixed quota. As a planning baseline, many 15-second dialogue scenes land around 4–8 shots and many 30-second scenes around 7–12, but a held take or denser montage is valid when motivated.
+- Use establishing views only when spatial orientation must be established or reset.
+- Listener reactions may repeat when each reveals a genuinely different state; do not cut merely to alternate faces.
+- A micro-action detail shot should have one readable focal event and a visible consequence; it may contain supporting motion that does not compete for attention.
+- A long line normally benefits from a continuous performance shot, but it may cross a motivated cut/reaction **without restarting the audio** when the target workflow keeps one continuous audio segment. Do not cut merely to add coverage.
 
+<!-- RULE:DIALOGUE.CONTINUITY -->
 ## Dialogue alignment
 
 Write complete original lines and specify usable delivery:
@@ -28,9 +28,9 @@ Write complete original lines and specify usable delivery:
 角色A（压低音量，速度逐渐变慢）：“完整台词。”
 ```
 
-Chinese dialogue capacity is roughly 4–5 characters per second before pauses. Add time for overlap, failed breath, swallowing, searching, or object handling.
+Use measured actor/audio duration whenever available. Without measured audio, treat roughly **4–5 Chinese characters/second** or **2–3 English words/second** as planning estimates, not model limits. Add time for overlap, failed breath, swallowing, searching, or object handling.
 
-Do not repeat a line over a listener reaction shot. If overlap matters, state the exact relationship between tail sound and interruption.
+Do not replay or restart a line over a listener reaction shot. A continuous line may carry across the cut while the listener is shown; specify the audio continuation so the same words are not generated twice. If overlap matters, state the exact relationship between tail sound and interruption.
 
 ## Spatial power
 

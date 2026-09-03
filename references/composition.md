@@ -2,15 +2,19 @@
 
 Composition is forced reading. It tells the audience where to look and what to feel, before a single word. These are usable in both ratios; the 9:16 section is where vertical re-composition lives.
 
-## One-shot, three-jobs law (一镜三职责律)
+## Meaningful-shot law
 
-Every shot must do **at least one** of three jobs — otherwise delete it:
+<!-- RULE:CUT.STATE_CHANGE -->
+A shot earns its cut by advancing at least **one meaningful state dimension**:
 
-1. **改情绪** — the audience's feeling about the scene changes (sympathy, dread, relief).
-2. **推动作** — a physical event actually moves forward (a step, a blow, a door, a reach).
-3. **增加压力** — tension, stakes, or information pressure goes up, not stayed flat.
+1. **information** — the audience learns or reinterprets something;
+2. **emotion** — audience or character emotional state visibly changes;
+3. **tactical advantage** — control, threat, access, or leverage changes;
+4. **spatial relation** — distance, obstruction, ownership of space, or axis relation changes;
+5. **physical action** — an action reaches a new causal state;
+6. **decision** — commitment, refusal, or choice becomes visible.
 
-A shot that only re-frames the same action for a "nicer angle" fails this law. Apply it before composition.
+Major reversals should usually move two or more dimensions. A pure insert may advance only information or action; do not force an emotional beat into it. If only the camera changes and no meaningful state changes, the cut is decoration.
 
 ## Core techniques (four cups)
 
@@ -31,8 +35,8 @@ A shot that only re-frames the same action for a "nicer angle" fails this law. A
 ### 氛围
 | Technique | What it does |
 |---|---|
-| 俯拍 | 压抑、无力、被监视 |
-| 仰拍 | 霸气、威压、神性 |
+| 俯拍 | 改变空间支配、暴露程度与几何关系；可表现压迫，也可用于信息揭示或主观俯视 |
+| 仰拍 | 改变高度、前景遮挡与主体尺度感；可表现威压，也可表现脆弱、仰望或环境压迫 |
 | 明暗对比 | 高反差=强硬戏剧；低反差灰=消沉纪实 |
 | 逆光轮廓 | 剪影化，匿名、宿命、拒斥细节 |
 | 烟雨尘 | 悬浮粒子 = 时间感、脏、不经意的残酷 |
@@ -48,7 +52,7 @@ A shot that only re-frames the same action for a "nicer angle" fails this law. A
 | 前景人物虚 | 前景模糊人物钉住视线，主角在第二层 |
 | 速度模糊 | 快动作的残影、冲力 |
 | 慢镜 | 把一瞬间拉长，加重（关键帧动作）|
-| 贴地仰视 | 从地面往上，力度与威胁最大 |
+| 贴地仰视 | 强化前景尺度、地面运动与垂直透视；意义由动作和空间关系决定 |
 | 极端广角畸变 | 压迫、距离失真、逼近感 |
 | 运动跟随 | 镜头贴主体同动，势能不断 |
 
@@ -57,8 +61,8 @@ A shot that only re-frames the same action for a "nicer angle" fails this law. A
 |---|---|
 | 过肩 shot | 视线交换、两人关系空间 |
 | 隔档 | 前景物/人隔开两人 → 关系有障碍 |
-| 换位 | 谁移动到画左/画右 = 权力变化 |
-| 台阶高低 | 一高一低 = 天生的等级差 |
+| 换位 | 画面位置变化可承载关系变化，但需由真实移动、机位变化或叙事原因解释 |
+| 台阶高低 | 高差制造视觉关系与行动成本；不自动等同社会等级 |
 | 门框入画 | 门框占满上下，人从缝里进 → 权术/被框 |
 | 镜中错位 | 人看镜中自己 → 自我认知/分裂 |
 | 焦点拉主角 | 焦点从中景拉回主角 → 内心回收 |
@@ -80,7 +84,7 @@ Assembly order that holds across models:
 
 ## Intensity curve (张力曲线)
 
-A 30s Clip should climb, not plateau: tension rises, peaks around the **12–18s reversal**, then resolves. Early shots can be still and long; the second half should cut faster and load image density. Do not redistribute tension evenly.
+For a 30s Clip that genuinely contains a midpoint reversal, **12–18s is a useful default window, not a law**. Let the script determine where control changes. Rhythm may accelerate, decelerate, or hold after the reversal; do not mechanically make the second half faster if the scene needs stillness.
 
 ## 9:16 — 纵向交代，不是裁剪
 
@@ -93,13 +97,14 @@ Never describe 9:16 as a crop of 16:9. It is its own stage. Re-compose through *
 - 电梯、楼道、门缝这类窄纵向空间，天然是 9:16 的权力走廊。
 - 高机位俯拍坠落感、仰拍攀升感，竖屏拉得更长、更强调高低。
 
+<!-- RULE:ASPECT.SAFE_ZONE -->
 ## Safe zone (social delivery, secondary)
 
-For 9:16 social/short-drama, reserve roughly **top 8% / bottom 15% / right 12%** for interface overlays. This is a margin note, not the composition premise — the vertical stage comes first.
+For 9:16 social/short-drama, use the **current platform or user-provided safe-area template** when available. If none is available, keep eyes, dialogue-critical mouths, hands, trigger props, and required text away from likely UI-heavy edges without inventing universal percentages. The vertical stage comes first.
 
 ## Placement rule
 
-Keep **eyes, mouth, hands, and trigger props** in the central 70%. Keep chin and forehead intact in emotional close-ups. Any shot that cannot show the eyes/mouth/hands/prop where the story needs them → re-place or re-frame.
+Keep **eyes, mouth, hands, and trigger props** inside the current delivery surface’s usable region, prioritizing story-critical visibility over a universal percentage. Preserve chin/forehead only when the performance requires them; deliberate cropping is allowed when it serves the shot and does not hide the needed cue.
 
 ## Emotional close-up lenses
 

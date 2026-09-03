@@ -15,14 +15,15 @@ Changing ratio changes composition, staging, and sometimes focal choice; it does
 
 - Express relationship through left/right distance, negative space, horizontal blocking, doors, tables, and lateral moves.
 - Two-shots and over-shoulders can keep both faces and the trigger prop legible.
-- Keep key action within the central 85% unless the user requests platform-specific overlays.
+- Keep key action inside the current delivery surface’s usable region; if overlays matter, use a current platform/user template rather than a universal percentage.
 - Use 25–50mm for spatial relations and 80–135mm for reactions/details when the location supports the distance.
 
+<!-- RULE:ASPECT.SAFE_ZONE -->
 ## 9:16
 
 - Recompose through foreground/background depth, standing/sitting, steps, occlusion, and vertical power. Never describe it as a crop.
-- Avoid placing two full figures side-by-side across the narrow width. Prefer staggered depth, shoulder framing, one near/one far, or upper/lower levels.
-- Keep eyes, mouth, hands, and trigger props in the central 70%. For social delivery, reserve roughly top 8%, bottom 15%, and right 12% for interface overlays unless the user supplies another safe-zone template.
+- Two full figures side-by-side are allowed when the story needs symmetry or comparison; otherwise stagger depth, shoulder framing, one-near/one-far, or upper/lower levels to preserve readable separation in the narrow width.
+- Keep eyes, mouth, hands, and trigger props comfortably away from UI-heavy edges. For social delivery, use the current platform/user safe-area template when available; otherwise avoid claiming universal overlay percentages.
 - Keep chin and forehead intact in emotional close-ups. Use 35–65mm for vertical two-shots and 80–120mm for face detail; use longer detail lenses only when the space can support them.
 - Prefer short push-ins, tilts, or depth movement over wide lateral tracking.
 

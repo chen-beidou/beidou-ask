@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "skill_version": "3.0.1",
+  "principle": "One canonical rule source, model-scoped exceptions, and regression-backed changes. A local fix must not weaken another invariant.",
+  "rules": [
+    {
+      "id": "CAMERA.INTENT",
+      "scope": "core",
+      "canonical": "Each shot has one dominant camera intention. A simple shot normally uses one clear move or a locked camera. A composite move is allowed only when its phases form one causal camera sentence with an explicit trigger, path, hand-off, and landing; do not stack unrelated moves.",
+      "forbidden_legacy": [
+        "Every shot has exactly one primary camera move",
+        "One primary camera move per shot",
+        "must never stack multiple moves"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md",
+        "references/camera-vocabulary.md"
+      ]
+    },
+    {
+      "id": "CONTINUITY.WORLD_FIRST",
+      "scope": "core",
+      "canonical": "World state is authoritative. Screen position is a camera-dependent projection and may change when the camera changes even if the subject does not move.",
+      "forbidden_legacy": [
+        "screen side can never change when world position is unchanged"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/continuity-validator.md",
+        "references/continuity-ledger.md"
+      ]
+    },
+    {
+      "id": "CONTINUITY.EVENT_SCOPE",
+      "scope": "core",
+      "canonical": "A transition event authorizes only its participants and affected prop or scene key. Relational transactions name actor, target, prop, and hands when known.",
+      "forbidden_legacy": [
+        "global event authorizes all entities"
+      ],
+      "required_docs": [
+        "references/continuity-validator.md",
+        "references/continuity-ledger.md",
+        "references/output-schema.md"
+      ]
+    },
+    {
+      "id": "DETAIL.BY_FUNCTION",
+      "scope": "core",
+      "canonical": "Shot-detail requirements follow shot function; there is no universal per-shot checklist.",
+      "forbidden_legacy": [
+        "Every shot must contain environment pressure, body micro-action, and sound anchor"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md"
+      ]
+    },
+    {
+      "id": "CUT.STATE_CHANGE",
+      "scope": "core",
+      "canonical": "A new shot advances at least one meaningful state dimension. Major reversals should usually advance two or more, but tactical or insert shots do not need a forced emotional change.",
+      "forbidden_legacy": [
+        "Every new shot must reveal both a new fact and a new emotional level"
+      ],
+      "required_docs": [
+        "references/dramatic-beats.md",
+        "references/composition.md"
+      ]
+    },
+    {
+      "id": "MODEL.SCOPE",
+      "scope": "core",
+      "canonical": "Model-specific defects and workarounds apply only to the named model/interface unless independently verified elsewhere.",
+      "forbidden_legacy": [
+        "prefer them even on other models"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/evidence-policy.md",
+        "references/model-defect-compensation.md"
+      ]
+    },
+    {
+      "id": "ASSET.BINDING",
+      "scope": "core",
+      "canonical": "Asset names are stable internal identity keys. Render @Name only on interfaces that support @ reference binding.",
+      "forbidden_legacy": [
+        "every named asset has a reference image"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md"
+      ]
+    },
+    {
+      "id": "EVIDENCE.LEVELS",
+      "scope": "core",
+      "canonical": "Operational claims are tagged as official, controlled, field-observed, partial, inferred, or experimental; unverified observations do not become universal hard rules.",
+      "forbidden_legacy": [],
+      "required_docs": [
+        "references/evidence-policy.md",
+        "references/test-ledger.md"
+      ]
+    },
+    {
+      "id": "LANGUAGE.CONTRACT",
+      "scope": "core",
+      "canonical": "User-facing planning/explanation follows the user language. A model adapter may require a different machine-facing grammar or field language when that requirement is current and evidenced; that adapter-level syntax wins only for the compiled machine prompt.",
+      "forbidden_legacy": [
+        "Use Chinese shot numbering",
+        "Use concise, causal Chinese descriptions",
+        "Use chronological, causal Chinese prose"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md",
+        "references/continuity-validator.md",
+        "references/seedance-adapter.md",
+        "references/wan-3.0-adapter.md",
+        "references/kling-adapter.md"
+      ]
+    },
+    {
+      "id": "DIALOGUE.CONTINUITY",
+      "scope": "core",
+      "canonical": "Preserve supplied dialogue verbatim and in order. A line may cross cuts when audio is continuous, the cut does not restart or duplicate words, and the target workflow supports it; across independently generated clips use an explicit audio handoff or keep the line intact.",
+      "forbidden_legacy": [
+        "Do not split a line across shots",
+        "A line longer than four seconds stays in one continuous shot"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/dialogue-mode.md",
+        "references/sound-direction.md",
+        "references/output-schema.md"
+      ]
+    },
+    {
+      "id": "DIRECTING.NO_ONE_TO_ONE_METAPHOR",
+      "scope": "core",
+      "canonical": "Do not translate an abstract emotion or power label directly into a camera angle/move. Camera and blocking choices must be justified by visible action, spatial relation, information order, or a deliberate inversion.",
+      "forbidden_legacy": [
+        "角色占上风 → 镜头**仰视**他",
+        "角色处下风 → 镜头**俯视**他"
+      ],
+      "required_docs": [
+        "references/spatial-power.md",
+        "references/camera-vocabulary.md",
+        "references/dramatic-beats.md"
+      ]
+    },
+    {
+      "id": "ASPECT.SAFE_ZONE",
+      "scope": "core",
+      "canonical": "UI safe areas are platform/interface specific. Use a current user/platform safe-area template when available; otherwise keep critical story information away from likely overlay edges without claiming universal percentages.",
+      "forbidden_legacy": [
+        "top 8% / bottom 15% / right 12%",
+        "central 70%",
+        "central 85%"
+      ],
+      "required_docs": [
+        "references/aspect-ratio.md",
+        "references/composition.md",
+        "references/output-schema.md"
+      ]
+    },
+    {
+      "id": "MODEL.SYNTAX_PRECEDENCE",
+      "scope": "model-adapter",
+      "canonical": "Generic planning language never overrides a verified model-specific machine grammar. Keep the director plan model-neutral, then compile it through the selected adapter; adapter syntax overrides only the machine-facing prompt layer.",
+      "forbidden_legacy": [],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md",
+        "references/minimax-h3-adapter.md"
+      ]
+    },
+    {
+      "id": "MODEL.CLAIM_PROVENANCE",
+      "scope": "model-adapter",
+      "canonical": "Exact model capabilities, syntax requirements, limits, and defect workarounds require a dated provenance entry. Undocumented prompt-length/action/noun-count formulas remain heuristics or are removed; volatile interface limits defer to the current interface.",
+      "forbidden_legacy": [
+        "Keep 1–3 actions maximum",
+        "more than ~4–5 distinct nouns breaks it",
+        "Single take: **40–80 words**",
+        "image-to-video: 20–40"
+      ],
+      "required_docs": [
+        "references/evidence-policy.md",
+        "references/seedance-adapter.md",
+        "references/wan-3.0-adapter.md",
+        "references/minimax-h3-adapter.md",
+        "references/kling-adapter.md"
+      ]
+    }
+  ]
+}

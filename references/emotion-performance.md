@@ -60,9 +60,9 @@ Escalate through different channels rather than repeating the same reaction.
 
 The listener must perceive or misread a leak and change behavior. A reaction shot that changes nothing is decorative. Valid changes include softening pressure, interrupting, withdrawing, moving closer, surrendering a prop, or exploiting weakness.
 
-## Show, don't tell (three-detail check)
+## Show, don't tell (performance-shot three-detail check)
 
-The model renders bodies, not feelings. Never write an emotion word alone — translate it into three physical facts. Before shipping any shot, it must carry **at least one** from each row. If a shot has a zero, fix the shot:
+The model renders bodies, not feelings. Never write an emotion word alone. For **performance-led dialogue/reaction shots**, translate emotion into three observable facts and include at least one from each row. This is not a universal requirement for action impacts, inserts, establishing shots, or transitional micro-shots; those follow their own functional checks:
 
 | Check | Must have one of |
 |---|---|
@@ -74,5 +74,5 @@ The model renders bodies, not feelings. Never write an emotion word alone — tr
 
 ## Final-frame rule
 
-Each shot must end on a clear **destination image** — the model treats the ending as the emotional point it lands on. Write the last thing the audience sees, not just the last action. If the ending is ambiguous ("人物站着"), give it a destination ("人物背对镜头走进光里，身后灯火一盏盏灭").
+A **decisive, held, or emotionally weighted shot** should end on a clear destination image — the visual state the audience is meant to land on. Write the last thing the audience sees, not just the last verb. Very short inserts and cut-on-action bridge shots do not need a separate poetic destination; they need a precise hand-off state that makes the next shot causally continuous.
 

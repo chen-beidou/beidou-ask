@@ -1,11 +1,14 @@
 # Seedance adapter
 
-Use concise, causal Chinese descriptions. Prefer visible behavior and exact temporal order over long style adjective stacks.
+<!-- RULE:LANGUAGE.CONTRACT -->
+<!-- RULE:MODEL.CLAIM_PROVENANCE -->
+
+Use this profile only when the selected target is Seedance. Follow the user's output language; keep descriptions concise, causal, behavior-first, and temporally explicit. Do not switch languages on an unverified assumption that one language performs better.
 
 ## Clip lengths
 
 - Use the user's supported 15- or 30-second setting.
-- A 30-second Clip needs a midpoint reversal; do not stretch a 15-second beat.
+- A 30-second Clip should contain enough state development to justify its length; use a midpoint reversal only when the script actually turns there. Do not stretch a 15-second beat merely to fill time.
 - If dialogue/action density exceeds capacity, split into consecutive Clips and restate the incoming asset/state anchors for each independently generated Clip.
 
 ## Prompt structure

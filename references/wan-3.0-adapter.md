@@ -1,5 +1,8 @@
 # Wan 3.0 adapter
 
+<!-- RULE:LANGUAGE.CONTRACT -->
+<!-- RULE:MODEL.CLAIM_PROVENANCE -->
+
 Use this profile only when the user selects Wan 3.0. Treat hosted-product limits as changeable and prefer the user's current interface when it conflicts with this profile.
 
 ## Verified capability envelope
@@ -12,8 +15,8 @@ Use this profile only when the user selects Wan 3.0. Treat hosted-product limits
 ## Prompt rendering
 
 1. Keep one Clip centered on one objective and one changed state.
-2. Use chronological, causal Chinese prose with explicit subject, direction, contact, result, and sound event.
-3. For 20–30 seconds, design a midpoint reversal instead of stretching a shorter beat.
+2. Use chronological, causal prose in the user's language with explicit subject, direction, contact, result, and sound event. Do not switch languages without model-specific evidence or user preference.
+3. For 20–30 seconds, add enough causal development to justify the longer duration; use a midpoint reversal only when the scene actually turns there, rather than forcing one.
 4. Use exact timestamps as editorial structure, not a guarantee of frame-accurate execution.
 5. Put stable identity and reference bindings before shots; do not repeat global style in every shot.
 6. For first/last-frame generation, make the first shot physically compatible with the start frame and make the final shot arrive at the supplied end frame without teleportation.
@@ -23,8 +26,8 @@ Use this profile only when the user selects Wan 3.0. Treat hosted-product limits
 
 Prefer fewer complete action units over dense cut counts. Concentrate constraints on identity, hand/prop ownership, screen direction, contact, and ending state. If the chosen Wan interface exposes different duration or asset limits, follow the interface and note the assumption in `生成前提醒`.
 
-## Field-verified defects (user-paid generations, 2026-08)
+## Field observations (user-paid generations, 2026-08)
 
-- **Prompt weight > reference image.** Any appearance description in the prompt overrides the supplied reference image's look. For every character/asset with a supplied reference, anchor with the bare `@Name` only — no appearance traits in the prompt; the reference image owns appearance, and the prompt carries only action, expression, posture, and state. See [input-contract.md](input-contract.md) asset anchors.
-- Fight scenes degrade into unreadable flailing when a Clip packs in multi-exchange choreography. Compensate: one complete action unit per shot, explicit bottom-up load chain (蹬地→转腰→接触→位移→恢复), stable or slow-push camera during exchanges. See [model-defect-compensation.md](model-defect-compensation.md).
+- **Prompt appearance can compete with reference appearance `[FIELD-OBSERVED]`.** When a supplied reference owns appearance, avoid redundant appearance traits in the prompt; keep action, expression, posture, and state. Do **not** assume Wan APIs understand literal `@Name`: bind references using the active Wan interface/media fields, and use the stable asset name as the textual identity key. See [input-contract.md](input-contract.md) asset anchors.
+- Fight scenes can degrade into unreadable motion when a Clip packs dense multi-exchange choreography. Start from readable causal action units with an action-appropriate support/force chain, explicit contact/result/recovery, and camera motion that does not hide the exchange; split only when density defeats readability. See [model-defect-compensation.md](model-defect-compensation.md).
 - Off-screen narration (OS/VO) makes visible characters mouth speech. Compensate: name the character and state `嘴巴自然闭合，无口型，无说话动作` inside the shot or constraint block. See [model-defect-compensation.md](model-defect-compensation.md).

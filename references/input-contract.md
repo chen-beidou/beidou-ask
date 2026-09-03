@@ -34,11 +34,14 @@ Treat supplied dialogue as immutable source text. Record authorized dialogue rew
 
 ## Asset anchors
 
-Default assumption: **every named asset has a reference image**. Anchor with the bare `@Name` the first time it appears in each independently generated Clip; later mentions use only the name. Never write appearance descriptions for named assets — the reference image owns appearance, and the prompt carries only action, expression, posture, and state.
+Treat each named asset as a stable **internal identity key**. Do not assume that every target platform interprets `@Name` as a reference binding.
 
-Only when the user explicitly says an asset has no reference image may the anchor carry at most two inferred traits, and the asset card says `外观为推断`.
+- If the user's interface already uses `@Name`, or the selected adapter explicitly supports that syntax, render the first binding as bare `@Name`.
+- If the platform uses uploaded reference slots, media fields, IDs, or another binding mechanism, use that mechanism and keep the visible prompt anchored by the stable asset name without inventing `@` semantics.
+- When a supplied reference owns appearance, do not restate appearance traits unless needed to distinguish a temporary visible state (for example wet hair, torn sleeve, fresh blood).
+- Only when the user explicitly says an asset has no reference image may the asset card carry at most two inferred appearance traits, marked `外观为推断`.
 
-Do not create image-generation prompts, fake uploaded assets, or invented formal state-asset names.
+Do not create image-generation prompts, fake uploaded assets, invented formal state-asset names, or unsupported platform binding syntax.
 
 ## When one question is necessary
 

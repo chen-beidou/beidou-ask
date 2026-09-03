@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "snapshot_date": "2026-09-03",
+  "models": {
+    "Seedance 2.5": {
+      "status": "official-snapshot",
+      "sources": [
+        "https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5"
+      ],
+      "claims": [
+        "up to 30 seconds per generation",
+        "supports multi-round extension",
+        "supports multimodal/reference-based generation"
+      ],
+      "volatile": [
+        "interface quotas",
+        "exact reference counts",
+        "commercial surface availability"
+      ]
+    },
+    "Wan 3.0": {
+      "status": "official-snapshot",
+      "sources": [
+        "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/wan3-video-generation-guide",
+        "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/wan3-video-generation-api-reference"
+      ],
+      "claims": [
+        "2–30 second output or smart duration on the documented Alibaba Cloud interface",
+        "30 fps MP4 output",
+        "text-to-video, first-frame/first-last-frame image-to-video, multimodal reference generation, video editing and extension",
+        "native audio-video generation with dialogue/BGM/SFX on the documented interface"
+      ],
+      "volatile": [
+        "media quotas",
+        "regional availability",
+        "hosted duration/resolution tiers"
+      ]
+    },
+    "MiniMax H3": {
+      "status": "official-snapshot",
+      "sources": [
+        "https://github.com/MiniMax-AI/MiniMax-H3",
+        "https://github.com/MiniMax-AI/MiniMax-H3/blob/main/skills/h3-prompt-writing/references/base-en.txt",
+        "https://github.com/MiniMax-AI/MiniMax-H3/blob/main/skills/h3-prompt-writing/references/ref-en.txt"
+      ],
+      "claims": [
+        "4–15 second output",
+        "24 fps output",
+        "up to 2K via H3-Regenerate-2K",
+        "32 kHz stereo audio",
+        "official structured English prompt grammar; dialogue/lyrics preserve original language in <d>"
+      ],
+      "volatile": [
+        "hosted quotas",
+        "regional/API availability"
+      ]
+    },
+    "Kling 3.x": {
+      "status": "interface-dependent",
+      "sources": [],
+      "claims": [
+        "no undocumented word/action/noun-count rule is treated as hard capability in this package"
+      ],
+      "volatile": [
+        "prompt syntax",
+        "model variants",
+        "duration",
+        "reference limits",
+        "negative-prompt behavior"
+      ]
+    }
+  }
+}

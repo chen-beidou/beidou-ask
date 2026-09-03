@@ -1,18 +1,19 @@
-# Model defect compensation (field-verified)
+# Model defect compensation
 
-Two defects verified by the user's own paid generations. The response to both is to compensate inside the prompt — never to avoid the model. Apply these rules whenever the target model is Wan 3.0 or MiniMax H3, and prefer them even on other models unless the user says otherwise.
+<!-- RULE:MODEL.SCOPE -->
+The observations below come from user-paid generations and are **model-scoped field observations**, not universal laws. Apply a workaround only to the model(s) named by that defect. Never promote it to another model merely by analogy. On an untested model, the same wording may be tried only as an `EXPERIMENTAL` heuristic and should not become a hard invariant until reproduced. See `evidence-policy.md`.
 
-## Defect 1: Wan 3.0 fight scenes degrade
+## Defect 1: Wan 3.0 fight scenes degrade `[FIELD-OBSERVED]`
 
 Complex exchanges collapse into unreadable flailing. Compensate by simplifying what one Clip asks the model to render:
 
-- One complete action unit per shot: initiation → contact → displacement → recovery. No multi-hit exchanges inside a single shot; put a second exchange in the next shot instead.
-- Write the load chain explicitly, bottom-up: 脚底蹬地 → 腰胯转动 → 拳/械到达接触点 → 受击方沿受力方向位移 → 踉跄后站稳. Name the contact point and the displacement direction for every strike.
-- Keep the camera readable: 固定机位 or 缓慢推进 during exchanges. Avoid fast orbits, spins, or whip pans while bodies are moving fast.
-- If more than two characters are in frame, the others hold position, block a route, or threaten — only one pair exchanges in this Clip.
-- Write beats as physical facts (contact, displacement, recovery), never as speed adjectives (凌厉, 快如闪电, 密集对攻).
+- Start with one readable causal action unit per shot: initiation → contact/clear interaction → displacement/result → recovery/new state. If a multi-hit exchange is essential, keep it only when each contact and result remains readable; otherwise split the exchange.
+- Describe the force chain that actually applies to the action. For a grounded human strike this may be 脚底/支撑 → 躯干/关节传力 → 接触点 → 受力方向 → 恢复；for aerial, seated, vehicle, firearm, creature, or non-human motion, use the relevant support/impulse chain instead of forcing a foot-to-hip template.
+- Keep camera motion subordinate to action readability. A locked/slow camera is one reliable option, but a motivated tracking or composite move is allowed when it does not hide the causal contacts.
+- In multi-character scenes, limit simultaneous precision choreography to what can remain causally legible; background characters may still move when their motion has a clear task and does not compete with the focal exchange.
+- Write beats primarily as physical facts (contact/interaction, displacement/result, recovery). Speed/quality adjectives may supplement those facts, but must not replace the causal action description.
 
-## Defect 2: lip movement during off-screen narration (OS/VO) — Wan 3.0 AND MiniMax H3
+## Defect 2: lip movement during off-screen narration (OS/VO) — Wan 3.0 AND MiniMax H3 `[FIELD-OBSERVED]`
 
 When the audio is narration or an off-screen line, visible characters still mouth speech. Suppress it explicitly:
 
@@ -24,8 +25,9 @@ When the audio is narration or an off-screen line, visible characters still mout
 
 ## Validation hooks
 
-`scripts/validate-storyboard.mjs` enforces these mechanically:
+`scripts/validate-storyboard.mjs` keeps model-specific checks scoped behind `--model` and also runs model-agnostic world-state comparison:
 
-- A Clip marked 画外音/旁白/VO/OS whose body lacks a closed-mouth/no-lip constraint raises a warning.
-- An action Clip (动作/打斗/追逐/武打) whose body lacks load-chain vocabulary raises a warning.
+- A Wan 3.0 / MiniMax H3 Clip marked 画外音/旁白/VO/OS whose body lacks a closed-mouth/no-lip constraint raises a warning.
+- A Wan 3.0 action Clip (动作/打斗/追逐/武打) whose body lacks load/contact/displacement/recovery vocabulary raises a warning.
 - With `--script <file>`, every quoted dialogue line in the Clips must appear verbatim in the script (error if not).
+- Across all models, adjacent shots are compared for movement reversal, screen-position jumps, hand swaps, prop teleportation, posture jumps, injury resets/appearance, entry/exit mismatch, and facing flips. See `continuity-validator.md`.

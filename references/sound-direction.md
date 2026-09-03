@@ -26,6 +26,7 @@ Name the cause:
 
 Avoid an unexplained `pause`.
 
+<!-- RULE:DIALOGUE.CONTINUITY -->
 ## Overlap
 
 State who interrupts and where:
@@ -35,6 +36,11 @@ State who interrupts and where:
 ```
 
 Use overlap for pressure, rescue, excitement, denial, or intimacy. Do not overlap every exchange.
+
+
+### Dialogue across cuts
+
+A cut does not imply an audio restart. If one spoken line continues over a reaction or insert, keep a single word sequence and state where the visual cut occurs relative to the continuing audio. Across independently generated Clips, use a deliberate audio handoff/edit plan or keep the line inside one Clip; never duplicate the same words on both sides of a boundary.
 
 ## Speech failure
 

@@ -41,6 +41,10 @@ Pair a movement with a target — "dollies in on her eyes", not just "dolly in" 
 - Stacking unrelated camera moves with no shared viewing task.
 - Open-ended motion without a readable endpoint when the endpoint matters to the next state; otherwise a deliberately unresolved move is allowed.
 
+## What must survive compilation
+
+A compact causal order may reorganize our wording, but it may not drop: durable state (posture detail, binding marks, prop form 形状/成色/位置, injury, light direction), the three sound layers (环境底噪 / 材质动作声 / 身体声), inner beats inside a long block, each line's open/close time and its voice anchor's relative change, the axis side and the angle change between consecutive shots, the unit's freeze-frame line — state it as the endpoint, since open-ended motion hangs — the sound landing at the end, and any named prohibition. Everything that survives goes in as plain sentences; do not invent negative-prompt syntax for it. See `prompt-anatomy.md`.
+
 ## Multi-shot sequences
 
 For interfaces that expose multi-shot sequencing, keep identity/reference roles and durable world facts stable across cuts while allowing lens, light result, and camera viewpoint to change when the same world state justifies them. Do not repeat attributes that the interface already binds as references.

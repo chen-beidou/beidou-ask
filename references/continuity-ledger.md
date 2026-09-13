@@ -8,16 +8,22 @@ Use for multiple Clips, retries of later shots, or any state that must survive a
 ```text
 character identity and count
 screen side, depth, height, body orientation
+posture detail: leg position, weight, support point, what the body rests on
 optional world position, action-axis id/side, camera side of axis
 gaze target and distance
 hand use and limb constraints
-prop/weapon owner, location, condition
+binding/bandage/restraint method and its marks (几圈、绕过哪里、勒出的压痕)
+prop/weapon owner, location, condition, form (形状/成色/位置)
 wardrobe, dirt, blood, injury
-door, window, light, fire, debris, weather
+door, window, fire, debris, weather
+light source side, shadow direction, color temperature, contrast ratio
+medium state: moisture, dust, rain density, breath vapor
 breath intensity and vocal condition
 surface mask, exposed emotion, control strategy
 last spoken tail/overlap
 unfinished movement
+last cut mechanism and its hand-off clause
+freeze frame the last shot lands on
 ```
 
 Do not show this ledger by default. Render only the facts needed in the next Clip's spatial block and ending state.
@@ -38,6 +44,20 @@ Position is static; trajectory is the connected path a body traces across cuts. 
 **Enter/exit rule:** preserve travel direction, not a mechanically identical edge. For a continuing left-to-right path, a subject typically exits frame right and enters the next setup from frame left while continuing rightward; right-to-left is the inverse. If geography or camera movement makes another entry correct, show the turn/reposition or re-establish the axis explicitly.
 
 Track these just like durable state: they must survive the cut. Do not show the ledger by default; render only the trajectory facts needed in the next Clip's spatial block and ending state.
+
+## Cut hand-off ledger (剪切承接台账)
+
+<!-- RULE:TRANSITION.HANDOFF -->
+Track at every cut: the mechanism used (动作切/遮挡切/焦点接力/声音桥), the hand-off clause written into the incoming shot, and the minimum incoming state the next shot restates. Clip N+1 opens from Clip N's ending state; a cut never restarts or duplicates an action or line the previous shot already finished. Light state (source side, shadow direction, color temperature, contrast) is durable state and changes only with a visible cause. See `transitions.md` and `lighting.md`.
+
+<!-- RULE:PROMPT.LAYERS -->
+## Freeze-frame hand-off (定格帧交接)
+
+The last shot of a unit lands on a **freeze frame** — the exact state the next independently generated unit must start from (position, hands, prop, light, air, expression, unfinished motion). Write it once at the end of the unit: `定格帧=下一段起幅：……`. This is what makes multi-round extension and per-unit regeneration safe: the next unit is described from that frame, not from memory of the story.
+
+## Prop form anchors (道具形态锚点)
+
+Props deform across generations more often than faces do. For every prop that survives a cut, keep three facts identical in every unit: 形状 (size and silhouette), 成色 (material, age, breakage color), 位置 (whose hand, which screen side, where it lies when dropped). See `detail.md`.
 
 ## Durable versus transient state
 

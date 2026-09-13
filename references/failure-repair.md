@@ -23,6 +23,19 @@ Inspect evidence from the rendered Clip when available. Repair the **narrowest r
 | 旁白时嘴巴动 | 模型 | 对已验证模型加 `嘴巴自然闭合，无口型，无说话动作` | Wan 3.0 / H3；其他模型先标记实验性 |
 | 开放式运动挂起 | 模型 | 给运动指定终点 | Kling |
 
+## Ten-layer diagnostic order
+
+Read the symptom first, then repair the layer that owns it instead of rewriting the prompt (see `prompt-anatomy.md`):
+
+| 症状 | 先查的层 | 修法 |
+|---|---|---|
+| 人物/道具/服装漂移、伤情或光影跳变 | 3 持续状态 | 补姿势、绑定方式、道具形状·成色·位置、光源方向；跨段重申入场状态 |
+| 表演平、只有情绪词 | 6 可见细节 | 换成微观表演锚点（肌肉与表面）+ 一个来源可靠的材质事实 |
+| 声音空、莫名配乐 | 7 声音 | 补三层声音（环境底噪/材质动作声/身体声）；低频脉冲标"非音乐"；写段末收音 |
+| 节奏糊、赶或拖 | 8 时间 | 时间块拆成段内节拍（起手→触发→停顿→落点）；末镜写定格帧 |
+| 同一种崩坏反复出现 | 9 点名禁忌 | 把该变形原样写成一条禁止项，不复述通用质量词 |
+| 提示词太长 | 10 压缩顺序 | 按 `prompt-anatomy.md` 的顺序砍；不动身份、归属、接触、位移、台词、触发、定格帧、主光、点名禁忌 |
+
 ## Repair output
 
 Return the revised shots or Clip only, plus up to three short notes naming the fixed failure. Do not regenerate global style or unaffected Clips unless their contract must change.

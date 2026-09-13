@@ -2,6 +2,8 @@
 
 Use these as decision tests, not story templates.
 
+For the delivery *shape* (the four sections, asset card columns, shot-line template, 怎么用 line, preflight notes), follow [`sample-output.md`](sample-output.md); it is a format baseline and is checked by the release gate. Use the cases below for *decisions*, and never copy story content from either file.
+
 ## Case A: 15s, 9:16, jealousy protecting fear of loss
 
 - Surface: joking indifference.

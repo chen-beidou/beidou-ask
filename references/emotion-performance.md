@@ -72,6 +72,10 @@ The model renders bodies, not feelings. Never write an emotion word alone. For *
 
 > 坏例：`她感到孤独。` → 好例：`镜头压在她视线空白一侧。她指腹刮过旧桌沿，一下，两下；窗外雨把灯牌字冲得发糊。`
 
+## Time shape and the sound that proves it
+
+The three checks above are the *content* of a performance beat; its *timing* is 起始→触发→停顿→落点, written inside the shot's time block as inner beats (`0-1秒：眼睑绷紧、睫毛连颤；1-2.2秒：缓缓睁开、瞳孔收缩`). Pair each micro-action with the sound that proves it (衣物摩擦、吞咽、鼻息、呼吸变浅), give the shot one sourced material fact (see `detail.md`), and let a spoken line carry its own open/close time plus the relative change against the character's voice anchor (see `prompt-anatomy.md` and `sound-direction.md`). Escalate by changing channels, not by repeating one reaction louder.
+
 ## Final-frame rule
 
 A **decisive, held, or emotionally weighted shot** should end on a clear destination image — the visual state the audience is meant to land on. Write the last thing the audience sees, not just the last verb. Very short inserts and cut-on-action bridge shots do not need a separate poetic destination; they need a precise hand-off state that makes the next shot causally continuous.

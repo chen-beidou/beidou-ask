@@ -19,6 +19,10 @@ Use this profile only when the selected target is Seedance. Follow the user's ou
 4. One ending-state block.
 5. One concentrated constraint block.
 
+## Reference binding
+
+When the platform binds references through uploaded image slots, the prompt body repeats the short anchor and the project's image number, and never a full appearance description when a supplied reference owns appearance. Carry the numbers from the asset card's 参考图号 column into each Clip's 本段参考 line, then name the same numbers where the shot depends on that reference (identity, costume, environment, composition). See `sample-output.md`. Keep the reference numbers stable across regenerated Clips so a single Clip can be re-bound without rewriting the asset card.
+
 ## Shot line
 
 Each shot includes:
@@ -42,7 +46,11 @@ When the prompt is too long, remove in this order:
 4. decorative particles and fabric motion
 5. secondary movement that changes no state
 
-Never remove identity, ownership, initiator, contact, displacement, dialogue, trigger placement, ending state, or global style.
+Never remove identity, ownership, initiator, contact, displacement, dialogue, trigger placement, ending state, freeze state, main-light position, a named prohibition, or global style. The full order and its never-cut list live in `prompt-anatomy.md`.
+
+## What must survive compilation
+
+The concise causal rewrite may change wording, but it must not delete: durable state (posture detail, binding marks, prop form 形状/成色/位置, injury, light direction), the three sound layers (环境底噪 / 材质动作声 / 身体声), inner beats inside a long block, each line's open/close time and its voice anchor's relative change, the axis and the angle change between consecutive shots, the unit's freeze-frame line, the sound landing at the end, and any named prohibition. If the format has no slot for a fact, keep it as a plain sentence rather than dropping it.
 
 ## Failure prevention
 

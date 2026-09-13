@@ -26,7 +26,7 @@ function walk(dir, pred = () => true) {
 const policyPath = path.join(root, "policies", "canonical-rules.json");
 if (!fs.existsSync(policyPath)) fail("canonical policy registry missing");
 const policy = fs.existsSync(policyPath) ? JSON.parse(fs.readFileSync(policyPath, "utf8")) : { rules: [], skill_version: null };
-if (policy.skill_version !== "3.0.1") fail(`canonical policy version ${policy.skill_version} != 3.0.1`); else pass("canonical policy version");
+if (policy.skill_version !== "3.2.0") fail(`canonical policy version ${policy.skill_version} != 3.2.0`); else pass("canonical policy version");
 
 const mdFiles = walk(root, (p) => p.endsWith(".md"));
 const jsFiles = walk(path.join(root, "scripts"), (p) => /\.m?js$/.test(p) && !p.includes(".backup."));
@@ -173,6 +173,18 @@ for (const file of walk(root)) {
   if (/\.backup\.|\.tmp_|\.tmp$|~$/.test(rel)) fail(`development artifact would ship: ${rel}`);
 }
 if (!issues.some((x)=>x.includes("development artifact"))) pass("release artifact hygiene");
+
+// 9) The golden sample deliverable must pass the storyboard validator cleanly.
+const samplePath = path.join(root, "references", "sample-output.md");
+if (!fs.existsSync(samplePath)) {
+  fail("golden sample deliverable missing references/sample-output.md");
+} else {
+  const sampleRun = spawnSync(process.execPath, [path.join(root, "scripts", "validate-storyboard.mjs"), samplePath], { encoding: "utf8", maxBuffer: 8 * 1024 * 1024 });
+  const sampleOut = `${sampleRun.stdout}\n${sampleRun.stderr}`;
+  if (sampleRun.status !== 0) fail(`golden sample deliverable fails storyboard validation\n${sampleOut.trim()}`);
+  else if (sampleOut.includes("Warnings:")) fail(`golden sample deliverable raises validator warnings\n${sampleOut.trim()}`);
+  else pass("golden sample deliverable validates clean");
+}
 
 console.log(`\nRepository validation: ${issues.length} error(s), ${warnings.length} warning(s)`);
 if (warnings.length) warnings.forEach((x)=>console.log(`- WARN ${x}`));

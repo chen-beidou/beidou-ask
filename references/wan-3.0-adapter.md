@@ -22,6 +22,10 @@ Use this profile only when the user selects Wan 3.0. Treat hosted-product limits
 6. For first/last-frame generation, make the first shot physically compatible with the start frame and make the final shot arrive at the supplied end frame without teleportation.
 7. For reference-video or document inputs, cite only facts visible or stated in the source; do not invent unsupported details.
 
+## What must survive compilation
+
+Chronological causal prose may rewrite our wording, but it must not drop: durable state (posture detail, binding marks, prop form 形状/成色/位置, injury, light direction), the three sound layers (环境底噪 / 材质动作声 / 身体声), inner beats inside a long block — written as 先……随后…… clause pairs rather than timestamps when the interface prefers prose — each line's open/close time and its voice anchor's relative change, the axis and the angle change between consecutive shots, the unit's freeze-frame line, the sound landing at the end, and any named prohibition. If the interface exposes no field for a fact, keep it as a plain sentence inside the prose instead of deleting it. See `prompt-anatomy.md`.
+
 ## Compression and risk control
 
 Prefer fewer complete action units over dense cut counts. Concentrate constraints on identity, hand/prop ownership, screen direction, contact, and ending state. If the chosen Wan interface exposes different duration or asset limits, follow the interface and note the assumption in `生成前提醒`.

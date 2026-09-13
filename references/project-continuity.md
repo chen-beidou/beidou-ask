@@ -17,4 +17,12 @@ Track only durable facts that affect later shooting:
 
 At the end of an episode, retain only new durable changes. At the next episode, load only the facts relevant to its scenes. Never silently restore a destroyed location, lost prop, persistent injury, or changed relationship.
 
+## Cross-episode hand-off
+
+Carry three more facts between episodes, not only injuries and props:
+
+- **Freeze frame.** Each episode's last unit states the freeze frame (`定格帧=下一段起幅`); the next episode's first unit opens from it instead of re-establishing the scene from memory.
+- **Prop form.** 形状/成色/位置 stays fixed across episodes, not only across Clips — props deform more than faces do.
+- **Voice.** Each speaking character's voice anchor travels with them for the whole season; a change needs a shown cause. See `continuity-ledger.md` and `sound-direction.md`.
+
 Do not write or update project files unless the user requested file output or authorized continuity persistence.

@@ -48,6 +48,26 @@ Rules inherited from the official guide:
 
 The generic beidou Clip/shot plan remains the **director planning layer**. The H3 adapter compiles that plan into this official machine grammar instead of pasting the generic schema directly.
 
+## What must survive compilation
+
+The official grammar may reformat our wording, but nothing may be deleted on the way in:
+
+- durable state (posture detail, binding marks, prop form 形状/成色/位置, injury, light direction) stays as descriptive prose inside the shot;
+- the three sound layers (环境底噪 / 材质动作声 / 身体声) land in `overall_soundscape`; anything that could be mistaken for music is labeled 非音乐 and `non_diegetic_music` stays `N/A` unless the user asks for score;
+- inner beats stay inside the shot's prose — H3 cut times are cut times, not beats;
+- each line keeps its open/close timing and its voice anchor's relative change, written outside `<d>` as delivery and identity;
+- the axis side and the angle change between consecutive shots stay in the shot prose;
+- the unit's freeze-frame line and any named prohibition stay in the readable plan and are repeated in the constraint line rather than dropped.
+
+## Delivery form
+
+Keep both layers in one delivery: the readable Chinese director plan (asset card, style lock, spatial block, per-shot lines) stays visible, and the compiled English machine prompt is delivered as **one clearly marked copy-ready block** the user copies into H3 as a whole. Never interleave the two grammars shot by shot.
+
+- Compile each Clip's shots into `[Shot 1] ... [Shot 2] At MM:SS.mmm, ...`. A later shot's cut time equals the previous shot's end time in the plan: plan shots `0-2.4秒` and `2.4-5.2秒` → `[Shot 1] ... At 00:02.400, the camera cuts to ...`（计划里的 2.4 秒 = 00:02.400）.
+- Keep speaking IDs `(S1)`, `(S2)` stable across shots and keep `<d>` payloads verbatim in the original language.
+- The Chinese plan keeps shot numbering, 机位高度, 起幅→落幅, 速度, and 镜头物理响应; the machine layer states the same camera behavior in natural English so the two layers agree.
+- Name the marked block in the delivery's 怎么用 line so the user knows exactly what to paste, and keep the per-Clip reference numbers beside it.
+
 ## Planning rules before compilation
 
 1. Keep each generated unit within the selected H3 interface's supported duration.

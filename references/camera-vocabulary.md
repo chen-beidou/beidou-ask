@@ -28,6 +28,21 @@ Camera movement is motivated behavior, not decoration. Every move must answer *w
 | 推拉变焦 dolly zoom | 眩晕 / 失重 / 孤立 | 角色瞬间失衡、四周压过来（Jaws 式，几秒内） |
 | 焦点切换 rack focus | 引导视线/转移注意力 | 前景与后景的意义交替、暗示注意点 | 
 
+<!-- RULE:SHOT.TEMPLATE -->
+## Shot line template (镜头行模板)
+
+Every shot line is executable camera instruction first, content second:
+
+`镜头N（起-止秒）：[承接语（剪切机制），]景别（size），机位高度（angle），主运镜（move，起幅→落幅，速度，镜头物理响应）：内容`
+
+- **机位高度** — 低机位仰拍（low angle）/ 地面机位 / 平视（eye-level）/ 过肩（over the shoulder）/ 高机位俯拍（high angle）/ 顶视（top-down）。写出来，别让模型自己决定高度。
+- **主运镜与起幅→落幅** — one dominant intention (above); a moving shot names where the frame starts and where it lands（起幅中景→落幅近景），not only the verb.
+- **速度** — 慢速 / 中速 / 快速, stated once on the move it qualifies.
+- **镜头物理响应** — how the camera itself reacts: 无抖动（locked, clean）/ 轻微手持颤抖 / 随脚步起伏 / 随动作微沉 / 被撞击后轻晃。固定镜头也要写它的物理响应。
+- 光圈与焦段（f/2.8、85mm）是决定性镜头的可选提示，永远不能替代机位高度、起幅→落幅、速度、物理响应。
+
+> 例：镜头五（11.5-13.5秒）：承接车灯的余光（焦点接力），近景（close-up），平视（eye-level），缓慢拉远（pull back，起幅近景→落幅中景，慢速，镜头随他肩膀落下微沉）：……
+
 ## Micro-adjustments (optional)
 
 - 轻微手持颤抖 handheld tremble — 加真实感，勿在静物/凝视镜头用

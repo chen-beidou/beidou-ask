@@ -1,5 +1,34 @@
 # Changelog
 
+## v3.2.0 — ten-layer prompt anatomy (细节 / 声音 / 节拍 / 禁忌)
+
+- Added `references/prompt-anatomy.md`: the ten layers a complete prompt carries, layer priority when they compete, the compression order to follow when a prompt runs too long (and the facts that may never be cut), and the layers most often missing in practice (durable state, visible detail, sound floor, inner beats, named prohibitions).
+- Time layer defined in `output-schema.md`: a block over about four seconds or containing a turn is written as inner beats, and the unit's last shot states the freeze frame the next unit starts from.
+- Freeze-frame hand-off and prop form anchors (形状/成色/位置) added to `continuity-ledger.md`; boundary ledger now also tracks posture detail, binding/bandage marks, prop form, and medium state.
+- `sound-direction.md` now defines three sound layers (环境底噪 / 材质动作声 / 身体声), dry-versus-wet contrast, and the rule that sustained low-frequency or pulse-like sound is labeled 非音乐 so the model does not answer it with score.
+- `detail.md` rebuilt: material-and-surface table by shot size, micro-performance anchor conversion table with time shape and frequency, medium/air layer with its motivated-light rule, and prop form anchors.
+- Constraints must name the specific deformation a scene invites (换手、影子跳向另一侧、静默处补配乐) instead of generic quality words; the sample shows the shape.
+- `references/sample-output.md` enriched to demonstrate the new layers and still validates clean through the storyboard validator.
+- **Voice identity anchors**: every speaking character carries one voice anchor in the asset card (音色、说话底速、口音咬字、气息、口头习惯); delivery notes write only the relative change against it, and the anchor is durable state.
+- **Per-line dialogue timing**: each line states its own open/close time inside the shot window plus any inner breath gap, so pace, breath placement, and lip movement are pinned to the timeline.
+- **Sound landing**: the unit's last shot states how its sound ends (硬切静默 / 渐弱 / 留一口气 / 素材声自然收), closing the hole that used to be filled with a closing musical swell.
+- **Cut geometry** (`axis-and-angle.md`): the 180° rule, the 30° rule, eyeline match, reverse-shot staging, legal ways to cross the axis, and the constraint wording for the break a given scene invites.
+- Wired the ten layers into the four model adapters (a `What must survive compilation` block in each: grammar may reformat wording, never drop durable state, sound floor, beats, timing, freeze frame, or a named prohibition) and into `action-mode.md`, `emotion-performance.md`, `dialogue-mode.md`, `failure-repair.md` (ten-layer diagnostic order), and `project-continuity.md` (freeze frame, prop form, and voice across episodes).
+- Validator engine and its 44 fixed + 300 mutation = 344 cases are unchanged; skill version is now 3.2.0.
+
+## v3.1.0 — precision control (细节 / 转场 / 光影)
+
+- Added an executable shot-line template — 机位高度 + 主运镜(起幅→落幅) + 速度 + 镜头物理响应 — to `SKILL.md`, `output-schema.md`, and `camera-vocabulary.md`, with locked shots stating their physical response.
+- Added three precision reference files: `lighting.md` (motivated source, direction, ratio, color; light as durable state), `transitions.md` (hand-off clauses, cut mechanisms, cross-Clip boundaries), and `detail.md` (sourced, in-size, story-serving detail).
+- Asset card now carries a 参考图号 column and each Clip a 本段参考 line, so reference images bind per Clip and can be re-bound without rewriting the card.
+- Documented the `@Name` spacing convention for Chinese text so names stay machine-separable in continuity validation.
+- Preference layer now reads 目标模型 and a project shot-line template from user-stored preference, above built-in defaults.
+- MiniMax H3 delivery form defined: the Chinese director plan stays visible and the English machine layer ships as one marked copy-ready block, with the plan-to-`At MM:SS.mmm` cut-time conversion written out.
+- Mandatory model-defect safety reminders are exempt from the three-bullet 生成前提醒 limit.
+- Added `references/sample-output.md` as the golden delivery sample; the repository gate now validates it with the storyboard validator and fails on any warning.
+- Validator engine and its 44 fixed + 300 mutation = 344 cases are unchanged; skill version is now 3.1.0.
+
+
 ## v3.0.1 — release hardening
 
 - Added bilingual dialogue extraction for Chinese screenplay quotes, English spoken quotes, and MiniMax H3 `<d>` payloads.

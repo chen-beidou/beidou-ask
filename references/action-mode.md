@@ -38,6 +38,10 @@ Use “承接、动作未停、顺势、同时” to preserve continuity. Do not
 
 State direction, side, hand, contact point, force, balance, and recovery. For weapons, retain owner, hand, orientation, damage, and loss. For falls, show cause, trajectory, impact, and recovery rather than teleporting to the floor.
 
+## Detail, sound, and beats in action
+
+Action prompts lose precision in the same places as any other prompt, plus one of their own — a move described but not felt. Write it as: inner beats inside the time block (起手 → 接触或擦过 → 受力方向与位移 → 恢复选择), material and impact sound plus the body sound that proves effort (呼吸、闷哼、脚下滑擦), one readable material fact per shot (接触点的形变、扬尘、断口、勒痕), and a named prohibition against the deformation this action invites — 武器换手、接触无受力、位移跳跃、同一动作重复起手. End the unit on the freeze frame the next unit starts from. See `prompt-anatomy.md` and `detail.md`.
+
 ## Impact and safety
 
 Prefer readable timing and material response over particle decoration. Treat blood, injury, or dangerous imitation according to the user's intended rating and platform; do not add graphic detail that the request does not require.

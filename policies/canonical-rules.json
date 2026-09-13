@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "skill_version": "3.0.1",
+  "skill_version": "3.2.0",
   "principle": "One canonical rule source, model-scoped exceptions, and regression-backed changes. A local fix must not weaken another invariant.",
   "rules": [
     {
@@ -47,13 +47,127 @@
     {
       "id": "DETAIL.BY_FUNCTION",
       "scope": "core",
-      "canonical": "Shot-detail requirements follow shot function; there is no universal per-shot checklist.",
+      "canonical": "Shot-detail requirements follow shot function; there is no universal per-shot checklist. Detail must be sourced (asset set, scene facts, or script), visible at that shot size, and story-serving. A supplied reference owns appearance; the prompt owns only visible state.",
       "forbidden_legacy": [
         "Every shot must contain environment pressure, body micro-action, and sound anchor"
       ],
       "required_docs": [
         "SKILL.md",
-        "references/output-schema.md"
+        "references/output-schema.md",
+        "references/detail.md"
+      ]
+    },
+    {
+      "id": "SHOT.TEMPLATE",
+      "scope": "core",
+      "canonical": "Every shot line is executable camera instruction: 机位高度 + 主运镜(起幅→落幅) + 速度 + 镜头物理响应, then the visible content. A locked shot states 固定 with its physical response and needs no path. Aperture and focal length remain optional cues.",
+      "forbidden_legacy": [
+        "每镜必写光圈与焦段"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md",
+        "references/camera-vocabulary.md"
+      ]
+    },
+    {
+      "id": "LIGHT.CONTINUITY",
+      "scope": "core",
+      "canonical": "Light is written as observable behavior: motivated source, direction and hardness, ratio and color. Source direction, color temperature, and contrast are durable state that survives cuts and changes only with a visible cause.",
+      "forbidden_legacy": [
+        "光影只需在全局风格中描述一次",
+        "灯光气氛由模型自行发挥"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md",
+        "references/lighting.md"
+      ]
+    },
+    {
+      "id": "TRANSITION.HANDOFF",
+      "scope": "core",
+      "canonical": "A cut is a hand-off: every shot after the first names what it continues from, names its cut mechanism when it matters, and never replays the action or line the previous shot already finished. Clip N+1 opens from Clip N's ending state.",
+      "forbidden_legacy": [
+        "镜头之间无需说明承接关系",
+        "剪辑点全部交给后期"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md",
+        "references/transitions.md",
+        "references/continuity-ledger.md"
+      ]
+    },
+    {
+      "id": "PROMPT.LAYERS",
+      "scope": "core",
+      "canonical": "A complete prompt carries ten layers: hard spec, facts, durable state, action, camera, visible detail, sound, time, named prohibitions, and compression order. The thin layers are durable state, visible detail, sound floor, inner beats, and named prohibitions. Detail is not volume: every fact must be sourced, visible at its shot size, and story-serving. A long time block is written as inner beats and the unit's last shot states the freeze frame the next unit starts from. When compressing, cut repeated camera/light wording, duplicate negatives, and decorative motion first; never cut identity, ownership, initiator, contact, displacement, dialogue, trigger, ending state, main-light position, or a named prohibition.",
+      "forbidden_legacy": [
+        "细节越多越好",
+        "提示词越短越好"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md",
+        "references/prompt-anatomy.md",
+        "references/continuity-ledger.md"
+      ]
+    },
+    {
+      "id": "VOICE.IDENTITY",
+      "scope": "core",
+      "canonical": "Every speaking character carries one voice identity anchor (音色、说话底速、咬字口音、气息、口头习惯) fixed once in the asset card. A dialogue line writes only the relative change against that baseline, never a second description of the voice. The anchor is durable state and changes only with a shown cause.",
+      "forbidden_legacy": [
+        "声音交给配音",
+        "配音自行决定音色"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md",
+        "references/sound-direction.md"
+      ]
+    },
+    {
+      "id": "DIALOGUE.TIMING",
+      "scope": "core",
+      "canonical": "Every spoken line carries its own open and close time inside its shot window plus any inner breath gap, so pace, breath placement, and lip movement are pinned to one timeline. A shot-level time block alone is not enough.",
+      "forbidden_legacy": [
+        "台词不标开口时间",
+        "台词时长交给模型估计"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md",
+        "references/dialogue-mode.md"
+      ]
+    },
+    {
+      "id": "SOUND.LANDING",
+      "scope": "core",
+      "canonical": "The unit's last shot states how its sound ends (硬切静默 / 渐弱 / 留一口气 / 素材声自然收). An unstated ending is a hole the model fills with a closing musical swell, which is the usual source of unwanted score.",
+      "forbidden_legacy": [
+        "段末声音无需说明",
+        "结尾音效由模型自行补足"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/output-schema.md",
+        "references/sound-direction.md"
+      ]
+    },
+    {
+      "id": "CUT.GEOMETRY",
+      "scope": "core",
+      "canonical": "Cuts obey the 180° rule and the 30° rule: every shot of an exchange stays on the chosen side of the axis, and two consecutive shots of the same subject change the camera angle by roughly 30° or more, or change framing size enough to read as deliberate. The axis is declared in the spatial block, the angle change is written in the shot line when size alone does not carry it, and the likely break is named as a prohibition. Crossing the axis requires a neutral shot or a visible continuous camera move.",
+      "forbidden_legacy": [
+        "轴线与角度不必写进提示词",
+        "跳切交给后期处理"
+      ],
+      "required_docs": [
+        "SKILL.md",
+        "references/axis-and-angle.md",
+        "references/transitions.md"
       ]
     },
     {

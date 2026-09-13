@@ -13,7 +13,7 @@ A tension unit must advance at least one meaningful state dimension — informat
 
 ## Shot allocation
 
-- Shot count follows performance and information load rather than a fixed quota. As a planning baseline, many 15-second dialogue scenes land around 4–8 shots and many 30-second scenes around 7–12, but a held take or denser montage is valid when motivated.
+- Shot count follows performance and information load rather than a fixed quota. As a planning baseline, many 15-second dialogue scenes land around 5–8 shots and many 30-second scenes around 8–12, but a held take or denser montage is valid when motivated.
 - Use establishing views only when spatial orientation must be established or reset.
 - Listener reactions may repeat when each reveals a genuinely different state; do not cut merely to alternate faces.
 - A micro-action detail shot should have one readable focal event and a visible consequence; it may contain supporting motion that does not compete for attention.
@@ -29,6 +29,22 @@ Write complete original lines and specify usable delivery:
 ```
 
 Use measured actor/audio duration whenever available. Without measured audio, treat roughly **4–5 Chinese characters/second** or **2–3 English words/second** as planning estimates, not model limits. Add time for overlap, failed breath, swallowing, searching, or object handling.
+
+<!-- RULE:DIALOGUE.TIMING -->
+### Per-line timing (台词秒表)
+
+The shot time block says when the camera is on them; it does not say when the mouth moves. Give each line its own open and close time inside its shot window, plus any inner breath gap:
+
+```text
+镜头二（2.4-5.2秒）：……：@小满（压低音量，比平时更慢）：“你什么时候走。”（2.6秒开口，4.4秒收，句中留0.2秒气口）
+```
+
+- A line opens after the shot's first beat unless the cut is deliberately on the first word.
+- The close time leaves the tail inside the shot for the reaction, or states that the line runs past the cut on one continuous audio.
+- Place the breath gap where the character would actually need air — before the difficult word — not evenly across the line.
+- Deliver notes write the relative change against the character's voice anchor (see `sound-direction.md`), not a re-description of the voice.
+
+Without this, pace, breath placement, and lip movement are the model's guesses — that is where dubbing stops matching.
 
 Do not replay or restart a line over a listener reaction shot. A continuous line may carry across the cut while the listener is shown; specify the audio continuation so the same words are not generated twice. If overlap matters, state the exact relationship between tail sound and interruption.
 

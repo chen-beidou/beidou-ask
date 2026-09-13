@@ -1,6 +1,6 @@
 ---
 name: beidou-ask
-description: Design, rewrite, or repair production-ready cinematic shot instructions and video-model prompts for dialogue, action, mixed, and continuous scenes. Use for layered emotional performance, verbatim script dialogue, asset continuity, sound direction, selectable framing, or prompts targeting Seedance 2.x, Wan 3.0, and MiniMax H3. Do not use to generate character or scene artwork, storyboard grids, or to claim a rendered video has been visually verified without inspecting it.
+description: Design, rewrite, or repair production-ready cinematic shot instructions and video-model prompts for dialogue, action, mixed, and continuous scenes. Use for layered emotional performance, verbatim script dialogue, asset continuity, sound direction, voice identity anchors, per-line dialogue timing, selectable framing, light continuity, cut hand-offs and transitions, axis and camera-angle continuity (180°/30°), material detail, prompt-completeness checks and compression, or prompts targeting Seedance 2.x, Wan 3.0, and MiniMax H3. Do not use to generate character or scene artwork, storyboard grids, or to claim a rendered video has been visually verified without inspecting it.
 ---
 
 # beidou ask
@@ -17,7 +17,7 @@ Turn scripts, scene ideas, and existing visual assets into executable cinematic 
 <!-- RULE:LANGUAGE.CONTRACT -->
 <!-- RULE:MODEL.SYNTAX_PRECEDENCE -->
 - Output language: follow the user. Chinese is the fallback only when no language is implied. In Chinese output, add the standard English audiovisual term in parentheses on first use within each Clip; in English output, use standard English terms directly and do not force Chinese labels back in.
-- Read user-stored preference (project memory / CLAUDE.md) where present: 画幅, 时长, 风格, 节奏, 语言 carry priority above built-in defaults.
+- Read user-stored preference (project memory / CLAUDE.md) where present: 画幅, 时长, 风格, 节奏, 语言, 目标模型, and a project shot-line template (for example `机位高度·主运镜(起幅→落幅)·速度, 镜头物理响应`) carry priority above built-in defaults.
 - Director style: optional. On request, apply exactly one lens from `director-styles.md` to unify the look; it never changes narrative facts or dialogue.
 
 Do not ask about routine parameters that can use these defaults. Ask one necessary question only when the central subject, relationship, or required outcome cannot be inferred without materially changing the scene.
@@ -30,7 +30,12 @@ Read only the references needed for the current request:
 - For emotion, acting, dialogue, confrontation, interrogation, confession, negotiation, or reconciliation, read [references/emotion-performance.md](references/emotion-performance.md), [references/dramatic-beats.md](references/dramatic-beats.md), and [references/dialogue-mode.md](references/dialogue-mode.md).
 - For fights, chases, weapons, impacts, spells, destruction, or physical comedy, read [references/dramatic-beats.md](references/dramatic-beats.md) and [references/action-mode.md](references/action-mode.md).
 - For mixed dialogue/action scenes, read both mode references and classify each Clip separately.
-- For choosing a camera movement that carries meaning, read [references/camera-vocabulary.md](references/camera-vocabulary.md).
+- For choosing a camera movement that carries meaning, or for the executable shot-line template (机位高度·起幅→落幅·速度·镜头物理响应), read [references/camera-vocabulary.md](references/camera-vocabulary.md).
+- For light motivation, direction, ratio, color, or light continuity across cuts, read [references/lighting.md](references/lighting.md).
+- For what detail a shot needs, where that detail comes from, and how large it can read, read [references/detail.md](references/detail.md).
+- For how much a prompt must contain, the ten-layer completeness check, layer priority, and what to cut first when the prompt is too long, read [references/prompt-anatomy.md](references/prompt-anatomy.md).
+- For cut hand-offs, cut mechanisms, and transitions between shots or Clips, read [references/transitions.md](references/transitions.md).
+- For the 180° axis, the 30° angle rule, reverse-shot staging, eyeline match, or a cut that reads as a jump, read [references/axis-and-angle.md](references/axis-and-angle.md).
 - For power, dominance, or relationship position in the frame, read [references/spatial-power.md](references/spatial-power.md).
 - For composition and 9:16 vertical staging, read [references/composition.md](references/composition.md).
 - For an optional director-style look, read [references/director-styles.md](references/director-styles.md) and apply it as a lens (never a rewrite).
@@ -38,7 +43,7 @@ Read only the references needed for the current request:
 - For 9:16, reframing, social platforms, or any aspect-ratio choice, read [references/aspect-ratio.md](references/aspect-ratio.md).
 - For multiple Clips or later-scene continuation, read [references/continuity-ledger.md](references/continuity-ledger.md) and [references/continuity-validator.md](references/continuity-validator.md) when mechanical validation is available.
 - For episodic or long-running projects, also read [references/project-continuity.md](references/project-continuity.md).
-- For dialogue, overlap, breath, silence, music, or sound-led cuts, read [references/sound-direction.md](references/sound-direction.md).
+- For dialogue, overlap, breath, silence, voice identity anchors, sound landing at the end of a unit, music, or sound-led cuts, read [references/sound-direction.md](references/sound-direction.md).
 - For Seedance, read [references/seedance-adapter.md](references/seedance-adapter.md).
 - For Wan 3.0, read [references/wan-3.0-adapter.md](references/wan-3.0-adapter.md) and [references/model-defect-compensation.md](references/model-defect-compensation.md).
 - For MiniMax H3, read [references/minimax-h3-adapter.md](references/minimax-h3-adapter.md) and [references/model-defect-compensation.md](references/model-defect-compensation.md).
@@ -48,6 +53,7 @@ Read only the references needed for the current request:
 - For failed generations or revision requests, read [references/failure-repair.md](references/failure-repair.md) and repair the narrowest responsible layer.
 - Before final rendering, read [references/output-schema.md](references/output-schema.md).
 - Use [references/golden-cases.md](references/golden-cases.md) only when a concrete pattern is needed; do not imitate its story content.
+- Follow [references/sample-output.md](references/sample-output.md) as the format baseline for the four-section delivery; it is a shape reference, never a story to reuse.
 
 ## Core workflow
 
@@ -55,10 +61,10 @@ Read only the references needed for the current request:
 <!-- RULE:ASSET.BINDING -->
 2. Create short asset anchors only for supplied or story-required assets. Treat the asset name as the stable internal identity key. Render `@Name` only when the selected platform/interface actually supports or already uses `@` reference binding; otherwise use the adapter's reference mechanism or the stable bare name. Do not duplicate appearance descriptions when a supplied reference owns appearance. Only describe appearance (≤2 traits, marked inferred) when the user explicitly says an asset has no reference. Never generate art-asset prompts.
 3. Build the causal scene spine internally: objective → pressure → resistance → leak/impact → counteraction → changed state.
-4. For acting scenes, distinguish surface mask, underlying emotion, relationship goal, trigger, physiological leak, control strategy, speech behavior, listener response, and new relationship state.
-5. Establish spatial power, eyeline axis, screen direction, key props, and starting state before listing shots.
-6. Compile beats into shots. A camera change must reveal new information, not replay the same action or line.
-7. Render model-ready Clips with exact timestamps, functional camera language, visible action, sound behavior, ending state, and concentrated constraints. Add numerical lens/aperture guidance only to decisive shots when useful.
+4. For acting scenes, distinguish surface mask, underlying emotion, relationship goal, trigger, physiological leak, control strategy, speech behavior, listener response, and new relationship state. Fix each speaking character's voice anchor once (音色、说话底速、口音咬字、气息、口头习惯).
+5. Establish spatial power, eyeline axis, screen direction, key props, the scene's light state (motivated source, shadow direction, color relation), the axis side the camera lives on, and starting state before listing shots.
+6. Compile beats into shots. A camera change must reveal new information, not replay the same action or line. Every shot after the first opens by naming its hand-off from the previous shot, and names the cut mechanism when it matters. Each shot carries at least one sourced, in-size, story-serving detail.
+7. Render model-ready Clips with exact timestamps; every shot line carries 机位高度 + 主运镜(起幅→落幅) + 速度 + 镜头物理响应, then visible action, sound behavior, ending state, and concentrated constraints. A time block over about four seconds, or one containing a turn, is written as inner beats; each spoken line carries its own open/close time; the unit's last shot states how the sound lands and lands on the freeze frame the next unit starts from. Add numerical lens/aperture guidance only to decisive shots when useful.
 8. Check timeline, shot count, assets, dialogue capacity, aspect-ratio rules, continuity, and model limits. For saved or multi-Clip outputs, run `node scripts/validate-storyboard.mjs <file> --model "<target model>"` when local execution is available; omit `--model` for model-agnostic validation. When continuity is complex, add `--state-report <report.json>` and inspect the first state transition that produces a finding; use `--strict-continuity` for final delivery gates. Relational changes (give/pass/receive) are transactions: bind actor + target + prop + hands when known. For package changes, run `node scripts/release-check.mjs`; do not ship if the repository consistency gate or the full regression suite fails.
 
 ## Non-negotiable invariants
@@ -66,10 +72,26 @@ Read only the references needed for the current request:
 - Every Clip begins at 0 seconds and ends exactly at its declared duration; timestamps are continuous, non-overlapping, and use at most one decimal place.
 - Every Clip has exactly one spatial-position block and one ending-state block.
 - Every shot states shot size, at least one angle/view/movement descriptor, and a visible action/result or complete dialogue line. Aperture and focal length are optional direction cues, not mandatory model controls.
+<!-- RULE:SHOT.TEMPLATE -->
+- **Executable shot line.** Every shot line carries 机位高度 (低机位仰拍/平视/高机位俯拍 or an explicit height), 主运镜 with 起幅→落幅 when the camera moves, 速度, and 镜头物理响应 — how the camera itself reacts (无抖动/轻微手持颤抖/随脚步起伏/随动作微沉). A locked shot states 固定 and its physical response; it needs no path. Aperture and focal length stay optional. See `camera-vocabulary.md`.
 <!-- RULE:CAMERA.INTENT -->
 - **Dominant camera intention.** Each shot has one dominant camera intention. A simple shot normally uses one clear move or a locked camera. A composite move is allowed only when its phases form one causal camera sentence with an explicit trigger, path, hand-off, and landing; never stack unrelated moves just for variety. See `camera-vocabulary.md`.
+<!-- RULE:LIGHT.CONTINUITY -->
+- **Light is state, not ambience.** Name the motivated source, its direction and hardness, and the ratio/temperature relation. Source direction, color temperature, and contrast survive cuts and change only with a visible cause (a lamp switched, a curtain opened, a car passing). Never write mood-only light words. See `lighting.md`.
+<!-- RULE:TRANSITION.HANDOFF -->
+- **Every cut is a hand-off.** Each shot after the first names what it continues from (承接/动作未停/顺势/同时/话音未落) and, when it matters, its cut mechanism (动作切/遮挡切/焦点接力/声音桥). No shot replays an action or a line the previous shot already finished. See `transitions.md`.
 <!-- RULE:DETAIL.BY_FUNCTION -->
-- Shot-detail requirements follow shot function rather than a universal checklist. Performance/dialogue shots use the three-detail check (环境压力 + 身体微动作 + 声音锚点). Action shots prioritize force/contact/displacement/recovery plus a readable sound or material response. Inserts/details require a clear story function and visible state change. Decisive or held shots should land on a clear destination image; transitional micro-shots only need an unambiguous hand-off to the next shot.
+- Shot-detail requirements follow shot function rather than a universal checklist. Performance/dialogue shots use the three-detail check (环境压力 + 身体微动作 + 声音锚点). Action shots prioritize force/contact/displacement/recovery plus a readable sound or material response. Inserts/details require a clear story function and visible state change. Decisive or held shots should land on a clear destination image; transitional micro-shots only need an unambiguous hand-off to the next shot. Every shot still carries at least one sourced, in-size, story-serving detail. See `detail.md`.
+<!-- RULE:PROMPT.LAYERS -->
+- **Ten-layer completeness.** A finished prompt carries all ten layers: hard spec, facts, durable state, action, camera, visible detail, sound (ambience floor + material action + body), time, named prohibitions, and compression order. The thin layers are durable state, visible detail, sound floor, inner beats, and named prohibitions — check those before delivering. Beats belong inside a long block (`0-1秒：……；1-2.5秒：……`); the unit's last shot states the freeze frame the next unit starts from; constraints name the specific deformation this scene invites rather than generic quality words. When a prompt runs too long, compress in the order given by `prompt-anatomy.md`. See `prompt-anatomy.md`.
+<!-- RULE:VOICE.IDENTITY -->
+- **Voice identity anchor.** Every speaking character carries one voice anchor in the asset card (音色、说话底速、口音咬字、气息、口头习惯, three to five words). Per-line delivery writes only the relative change against it. The anchor is durable state: it survives cuts and changes only with a shown cause. See `sound-direction.md`.
+<!-- RULE:DIALOGUE.TIMING -->
+- **Per-line dialogue timing.** Every spoken line carries its own open and close time inside its shot window plus any inner breath gap — `（2.6秒开口，4.4秒收，句中留0.2秒气口）`. A shot-level time block alone leaves pace, breath, and lip movement to the model. See `dialogue-mode.md`.
+<!-- RULE:SOUND.LANDING -->
+- **Sound landing.** The unit's last shot states how its sound ends (硬切静默 / 渐弱收尾 / 留一口气 / 素材声自然收). An unstated ending is where a closing musical swell gets invented, which is the usual source of unwanted score. See `sound-direction.md`.
+<!-- RULE:CUT.GEOMETRY -->
+- **Cut geometry.** Cuts obey the 180° axis and the 30° angle rule. Declare the axis (who sits frame-left/right, which side the camera is on) in the spatial block; make each consecutive shot of the same subject change angle by roughly 30° or change size enough to read as deliberate; crossing the axis needs a neutral shot or a visible continuous camera move. See `axis-and-angle.md`.
 <!-- RULE:DIALOGUE.CONTINUITY -->
 - Preserve every supplied dialogue line verbatim and in order. Never add, delete, paraphrase, merge, or invent dialogue unless the user explicitly authorizes rewriting. A line may continue across a cut **inside the same continuous audio/generation segment** when the words do not restart or duplicate and the cut has a clear visual reason; across independently generated Clips, keep the line intact unless an explicit audio handoff/edit plan is part of the workflow. Use measured actor/audio duration when available; otherwise treat roughly 4–5 Chinese characters/sec or 2–3 English words/sec as planning estimates, then add time for silence, overlap, breath failure, or physical business.
 - Dialogue mode: 15 seconds usually 5–8 shots; 30 seconds usually 8–12 shots.
@@ -85,14 +107,16 @@ Read only the references needed for the current request:
 
 ## Output contract
 
-Return exactly four functional sections unless the user asks for analysis or requests a narrow repair. Localize the section labels to the output language. Chinese defaults are:
+Return exactly four functional sections unless the user asks for analysis or requests a narrow repair. Localize the section labels to the output language. Open with one 怎么用 line (which sections are shared across Clips, which block is copied per Clip, what to scan before generating). Chinese defaults are:
 
 1. `美术资产对照卡`
 2. `全局风格锁定`
 3. `视频生成提示词`
-4. `生成前提醒` — at most three bullets
+4. `生成前提醒` — at most three bullets; mandatory model-defect safety reminders do not count toward this limit
 
 For English output, use natural equivalents such as `Asset Reference Card / Global Style Lock / Video Generation Prompt / Preflight Notes`; do not mix languages merely to preserve a heading.
+
+When the selected adapter compiles a machine-facing prompt layer (for example MiniMax H3), deliver that layer as one clearly marked copy-ready block inside `视频生成提示词`, keep the readable director plan visible beside it, and never blend the two grammars in one block. State the delivery form — which block the user copies, how reference numbers bind — in the opening 怎么用 line. See `sample-output.md` for the shape.
 
 For alternative durations or aspect ratios, share the asset card and global style once, then provide clearly labeled variants. Do not duplicate unchanged global text inside every Clip.
 

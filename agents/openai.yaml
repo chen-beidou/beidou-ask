@@ -1,6 +1,7 @@
 interface:
-  display_name: "beidou ask"
-  short_description: "Seedance、Wan 3.0、MiniMax H3 电影分镜与情绪表演"
-  default_prompt: "Use $beidou-ask to turn my scene into model-ready cinematic shot instructions."
+  display_name: "Beidou Ask"
+  short_description: "Seedance、Wan、MiniMax完整不压缩电影分镜提示词"
+  default_prompt: "使用 $beidou-ask，把我的剧本整理成完整不压缩、规则已落实到逐镜头字段的可执行视频提示词。"
+
 policy:
   allow_implicit_invocation: true

@@ -1,6 +1,6 @@
 ---
 name: beidou-ask
-description: Design, rewrite, or repair production-ready cinematic shot instructions and video-model prompts for dialogue, action, mixed, and continuous scenes. Use for layered emotional performance, verbatim script dialogue, asset continuity, sound direction, voice identity anchors, per-line dialogue timing, selectable framing, light continuity, cut hand-offs and transitions, axis and camera-angle continuity (180°/30°), material detail, prompt-completeness checks and compression, or prompts targeting Seedance 2.x, Wan 3.0, and MiniMax H3. Do not use to generate character or scene artwork, storyboard grids, or to claim a rendered video has been visually verified without inspecting it.
+description: Design, rewrite, or repair production-ready cinematic shot instructions and video-model prompts for dialogue, action, mixed, and continuous scenes. Use for complete uncompressed delivery, rule-auditable timed shots, layered emotional performance, verbatim script dialogue, asset continuity, sound direction, voice identity anchors, per-line dialogue timing, selectable framing, light continuity, cut hand-offs and transitions, axis and camera-angle continuity (180°/30°), material detail, or prompts targeting Seedance 2.x, Wan 3.0, and MiniMax H3. Do not use to generate character or scene artwork, storyboard grids, or to claim a rendered video has been visually verified without inspecting it.
 ---
 
 # beidou ask
@@ -33,7 +33,7 @@ Read only the references needed for the current request:
 - For choosing a camera movement that carries meaning, or for the executable shot-line template (机位高度·起幅→落幅·速度·镜头物理响应), read [references/camera-vocabulary.md](references/camera-vocabulary.md).
 - For light motivation, direction, ratio, color, or light continuity across cuts, read [references/lighting.md](references/lighting.md).
 - For what detail a shot needs, where that detail comes from, and how large it can read, read [references/detail.md](references/detail.md).
-- For how much a prompt must contain, the ten-layer completeness check, layer priority, and what to cut first when the prompt is too long, read [references/prompt-anatomy.md](references/prompt-anatomy.md).
+- For the ten-layer completeness check, no-loss delivery pass, layer priority, and the optional concise derivative requested by the user, read [references/prompt-anatomy.md](references/prompt-anatomy.md).
 - For cut hand-offs, cut mechanisms, and transitions between shots or Clips, read [references/transitions.md](references/transitions.md).
 - For the 180° axis, the 30° angle rule, reverse-shot staging, eyeline match, or a cut that reads as a jump, read [references/axis-and-angle.md](references/axis-and-angle.md).
 - For power, dominance, or relationship position in the frame, read [references/spatial-power.md](references/spatial-power.md).

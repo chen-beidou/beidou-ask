@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.3.0 — complete uncompressed delivery（完整不压缩排版）
+
+- Replaced the former four-section delivery baseline with one self-contained segment structure: segment header, `素材说明`, `一句话概述`, `具体情节`, `段尾定格帧＝下一段起幅`, and `全局补充`.
+- Added explicit per-shot execution fields for `状态变化`, `承接与状态`, `画面动作`, `摄影机`, `可见细节与光影`, `台词与声音`, `镜头落点`, and risk-scoped `本镜禁止`.
+- Changed the default from compressible delivery to a complete no-loss pass. A concise version is now generated only when the user explicitly requests a labeled derivative; it never replaces the full rule-auditable prompt.
+- Required abstract rules to be resolved during writing: angle deltas, framing changes, inherited state, force/contact/displacement/recovery, focus relations, dialogue timing, sound landing, and other applicable constraints are written as concrete shot instructions rather than delegated to the video model.
+- Rebuilt `references/output-schema.md` and `references/sample-output.md` around the new layout, and updated Seedance/Wan guidance plus all cross-document heading references.
+- Extended `scripts/validate-storyboard.mjs` to recognize and validate the new segment header, material block, initial state, timestamped shot fields, final freeze frame, and global supplement while preserving old-format compatibility.
+- Updated README, skill UI metadata, canonical policy wording, failure-repair guidance, golden-case routing, version gate, and the distributable ZIP.
+- Full release gate remains clean: 344 continuity validator cases, 9 repository-gate mutation cases, and the golden sample all pass with 0 errors and 0 warnings.
+
 ## v3.2.0 — ten-layer prompt anatomy (细节 / 声音 / 节拍 / 禁忌)
 
 - Added `references/prompt-anatomy.md`: the ten layers a complete prompt carries, layer priority when they compete, the compression order to follow when a prompt runs too long (and the facts that may never be cut), and the layers most often missing in practice (durable state, visible detail, sound floor, inner beats, named prohibitions).

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "skill_version": "3.2.0",
+  "skill_version": "3.3.0",
   "principle": "One canonical rule source, model-scoped exceptions, and regression-backed changes. A local fix must not weaken another invariant.",
   "rules": [
     {
@@ -102,7 +102,7 @@
     {
       "id": "PROMPT.LAYERS",
       "scope": "core",
-      "canonical": "A complete prompt carries ten layers: hard spec, facts, durable state, action, camera, visible detail, sound, time, named prohibitions, and compression order. The thin layers are durable state, visible detail, sound floor, inner beats, and named prohibitions. Detail is not volume: every fact must be sourced, visible at its shot size, and story-serving. A long time block is written as inner beats and the unit's last shot states the freeze frame the next unit starts from. When compressing, cut repeated camera/light wording, duplicate negatives, and decorative motion first; never cut identity, ownership, initiator, contact, displacement, dialogue, trigger, ending state, main-light position, or a named prohibition.",
+      "canonical": "A complete prompt carries ten layers: hard spec, facts, durable state, action, camera, visible detail, sound, time, named prohibitions, and a no-loss delivery pass. The thin layers are durable state, visible detail, sound floor, inner beats, and named prohibitions. Detail is not volume: every fact must be sourced, visible at its shot size, and story-serving. A long time block is written as inner beats and the unit's last shot states the freeze frame the next unit starts from. The default delivery is complete and uncompressed. Only when the user explicitly requests a concise derivative may repeated camera/light wording, duplicate negatives, and decorative motion be reduced; never cut identity, ownership, initiator, contact, displacement, dialogue, trigger, ending state, main-light position, or a named prohibition.",
       "forbidden_legacy": [
         "细节越多越好",
         "提示词越短越好"

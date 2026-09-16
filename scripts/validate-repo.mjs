@@ -26,7 +26,7 @@ function walk(dir, pred = () => true) {
 const policyPath = path.join(root, "policies", "canonical-rules.json");
 if (!fs.existsSync(policyPath)) fail("canonical policy registry missing");
 const policy = fs.existsSync(policyPath) ? JSON.parse(fs.readFileSync(policyPath, "utf8")) : { rules: [], skill_version: null };
-if (policy.skill_version !== "3.2.0") fail(`canonical policy version ${policy.skill_version} != 3.2.0`); else pass("canonical policy version");
+if (policy.skill_version !== "3.3.0") fail(`canonical policy version ${policy.skill_version} != 3.3.0`); else pass("canonical policy version");
 
 const mdFiles = walk(root, (p) => p.endsWith(".md"));
 const jsFiles = walk(path.join(root, "scripts"), (p) => /\.m?js$/.test(p) && !p.includes(".backup."));

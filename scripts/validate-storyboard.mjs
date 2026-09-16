@@ -1146,27 +1146,35 @@ function applySegment(world, text, entityAliases, where, explicitState = null) {
   return nextWorld;
 }
 
-const clipHeader = /^###\s+Clip\s+(\d+)\s*｜\s*(\d+(?:\.\d+)?)(?:秒|s)\s*｜\s*(\d+(?:\.\d+)?:\d+(?:\.\d+)?)\s*｜\s*([^\n]+)$/gmi;
 const clips = [];
-let match;
-while ((match = clipHeader.exec(source)) !== null) {
-  clips.push({
-    number: Number(match[1]),
-    duration: Number(match[2]),
-    ratio: match[3],
-    descriptor: match[4].trim(),
-    start: match.index,
-    bodyStart: clipHeader.lastIndex,
-  });
+const clipHeaderPatterns = [
+  /^###\s+Clip\s+(\d+)\s*｜\s*(\d+(?:\.\d+)?)(?:秒|s)\s*｜\s*(\d+(?:\.\d+)?:\d+(?:\.\d+)?)\s*｜\s*([^\n]+)$/gmi,
+  /^#\s+第(\d+)段\s*｜\s*(\d+(?:\.\d+)?)(?:秒|s)\s*｜\s*(\d+(?:\.\d+)?:\d+(?:\.\d+)?)\s*｜\s*([^\n]+)$/gmi,
+];
+for (const clipHeader of clipHeaderPatterns) {
+  let match;
+  while ((match = clipHeader.exec(source)) !== null) {
+    clips.push({
+      number: Number(match[1]),
+      duration: Number(match[2]),
+      ratio: match[3],
+      descriptor: match[4].trim(),
+      start: match.index,
+      bodyStart: clipHeader.lastIndex,
+    });
+  }
 }
+clips.sort((a, b) => a.start - b.start);
 
 if (clips.length === 0) {
-  errors.push("No valid Clip header found. Expected: ### Clip 01｜15秒｜9:16｜对峙模式｜真人写实");
+  errors.push("No valid segment header found. Expected: # 第01段｜15秒｜9:16｜Seedance 2.5");
 }
 
 const assetCard = source.slice(0, clips[0]?.start ?? source.length);
 const assetRows = [...assetCard.matchAll(/\|\s*(@[\p{L}\p{N}_-]+)\s*\|\s*([^|\n]*)\|\s*([^|\n]*)\|/gu)];
-const definedAssets = new Set(assetRows.map((m) => m[1]));
+const materialSections = [...source.matchAll(/【素材说明】([\s\S]*?)(?=【一句话概述】)/gu)].map((m) => m[1]).join("\n");
+const materialTokens = [...materialSections.matchAll(/@[\p{L}\p{N}_-]+/gu)].map((m) => m[0]);
+const definedAssets = new Set([...assetRows.map((m) => m[1]), ...materialTokens]);
 const entityAliases = {};
 for (const m of assetRows) {
   const id = m[1];
@@ -1177,6 +1185,9 @@ for (const m of assetRows) {
   if (clearlyNonCharacter) continue;
   entityAliases[id] = unique([id, bare, anchor && anchor.length <= 20 ? anchor : null]);
 }
+for (const id of materialTokens) {
+  if (!entityAliases[id]) entityAliases[id] = unique([id, id.slice(1)]);
+}
 
 let world = emptyWorld();
 
@@ -1185,34 +1196,45 @@ clips.forEach((clip, index) => {
   const body = source.slice(clip.bodyStart, end);
   const label = `Clip ${String(clip.number).padStart(2, "0")}`;
 
-  const spatialCount = (body.match(/^(?:空间站位|Spatial staging|Spatial blocking)：?/gmi) || []).length;
-  const endingCount = (body.match(/^(?:结尾状态|Ending state)：?/gmi) || []).length;
-  const constraintCount = (body.match(/^(?:约束|Constraints?)：?/gmi) || []).length;
-  if (spatialCount !== 1) errors.push(`${label}: expected exactly one 空间站位 block, found ${spatialCount}`);
-  if (endingCount !== 1) errors.push(`${label}: expected exactly one 结尾状态 block, found ${endingCount}`);
-  if (constraintCount !== 1) errors.push(`${label}: expected exactly one 约束 block, found ${constraintCount}`);
+  const spatialCount = (body.match(/^(?:空间站位|初始状态|Spatial staging|Spatial blocking|Initial state)：?/gmi) || []).length;
+  const endingCount = (body.match(/^(?:结尾状态|段尾定格帧\s*[＝=]\s*下一段起幅|Ending state|Freeze frame\s*=\s*next segment opening)：?/gmi) || []).length;
+  const constraintCount = (body.match(/^(?:约束|Constraints?)：?|^【(?:全局补充|Global facts and prohibitions)】/gmi) || []).length;
+  if (spatialCount !== 1) errors.push(`${label}: expected exactly one 初始状态/空间站位 block, found ${spatialCount}`);
+  if (endingCount !== 1) errors.push(`${label}: expected exactly one 段尾定格帧/结尾状态 block, found ${endingCount}`);
+  if (constraintCount !== 1) errors.push(`${label}: expected exactly one 全局补充/约束 block, found ${constraintCount}`);
 
-  const spatialMatch = body.match(/^(?:空间站位|Spatial staging|Spatial blocking)[:：]\s*(.+)$/mi);
+  const spatialMatch = body.match(/^(?:空间站位|初始状态|Spatial staging|Spatial blocking|Initial state)[:：]\s*(.+)$/mi);
   const spatialText = spatialMatch ? spatialMatch[1] : "";
   if (spatialText) {
     world = applySegment(world, spatialText, entityAliases, `${label} 空间站位`, null);
     stateTrace.push({ clip: clip.number, phase: "spatial", text: spatialText, state: clone(world) });
   }
 
-  const shotRegex = /^(?:镜头([^（\n]+)（(\d+(?:\.\d+)?)-(\d+(?:\.\d+)?)秒）|Shot\s+([^(:\n]+)\s*\((\d+(?:\.\d+)?)\s*[-–]\s*(\d+(?:\.\d+)?)s?\))[:：]\s*(.+)$/gmi;
   const shots = [];
-  let shot;
-  while ((shot = shotRegex.exec(body)) !== null) {
-    const number = shot[1] || shot[4];
-    const start = Number(shot[2] || shot[5]);
-    const finish = Number(shot[3] || shot[6]);
-    const line = shot[7];
-    const rest = body.slice(shotRegex.lastIndex);
-    const nextMatch = rest.search(/\n(?:镜头[^（\n]+（\d|Shot\s+[^(:\n]+\s*\(\d)/i);
-    const segmentEnd = nextMatch >= 0 ? shotRegex.lastIndex + nextMatch : body.length;
-    const continuation = body.slice(shotRegex.lastIndex, segmentEnd);
-    const segmentText = `${line}\n${continuation}`;
-    shots.push({ number, start, end: finish, line, segmentText });
+  const fieldShotRegex = /^###\s+(\d+(?:\.\d+)?)\s*[—–-]\s*(\d+(?:\.\d+)?)秒\s*｜\s*([^\n]+)$/gmi;
+  const fieldMatches = [...body.matchAll(fieldShotRegex)];
+  if (fieldMatches.length) {
+    fieldMatches.forEach((shot, shotIndex) => {
+      const segmentStart = shot.index + shot[0].length;
+      const segmentEnd = shotIndex + 1 < fieldMatches.length ? fieldMatches[shotIndex + 1].index : body.length;
+      const segmentText = `${shot[3]}\n${body.slice(segmentStart, segmentEnd)}`;
+      shots.push({ number: shotIndex + 1, start: Number(shot[1]), end: Number(shot[2]), line: shot[3], segmentText, fieldFormat: true });
+    });
+  } else {
+    const shotRegex = /^(?:镜头([^（\n]+)（(\d+(?:\.\d+)?)-(\d+(?:\.\d+)?)秒）|Shot\s+([^(:\n]+)\s*\((\d+(?:\.\d+)?)\s*[-–]\s*(\d+(?:\.\d+)?)s?\))[:：]\s*(.+)$/gmi;
+    let shot;
+    while ((shot = shotRegex.exec(body)) !== null) {
+      const number = shot[1] || shot[4];
+      const start = Number(shot[2] || shot[5]);
+      const finish = Number(shot[3] || shot[6]);
+      const line = shot[7];
+      const rest = body.slice(shotRegex.lastIndex);
+      const nextMatch = rest.search(/\n(?:镜头[^（\n]+（\d|Shot\s+[^(:\n]+\s*\(\d)/i);
+      const segmentEnd = nextMatch >= 0 ? shotRegex.lastIndex + nextMatch : body.length;
+      const continuation = body.slice(shotRegex.lastIndex, segmentEnd);
+      const segmentText = `${line}\n${continuation}`;
+      shots.push({ number, start, end: finish, line, segmentText, fieldFormat: false });
+    }
   }
   if (shots.length === 0) {
     errors.push(`${label}: no timestamped shots found`);
@@ -1227,10 +1249,10 @@ clips.forEach((clip, index) => {
     if (i > 0 && Math.abs(current.start - shots[i - 1].end) > 0.0001) {
       errors.push(`${label}: timeline gap/overlap between 镜头${shots[i - 1].number} and 镜头${current.number}`);
     }
-    if (!/(远景|全景|中全景|中景|中近景|近景|特写|大特写|POV|主观视角|wide(?: shot)?|long shot|medium wide|medium shot|medium close[- ]?up|close[- ]?up|extreme close[- ]?up|insert|detail shot|over[- ]?the[- ]?shoulder|OTS)/i.test(current.line)) {
+    if (!/(远景|全景|中全景|中景|中近景|近景|特写|大特写|POV|主观视角|wide(?: shot)?|long shot|medium wide|medium shot|medium close[- ]?up|close[- ]?up|extreme close[- ]?up|insert|detail shot|over[- ]?the[- ]?shoulder|OTS)/i.test(current.segmentText)) {
       errors.push(`${shotLabel}: missing shot size or explicit POV`);
     }
-    if (!/(固定|手持|推|拉|摇|移|跟|升|降|环绕|俯拍|仰拍|平视|侧拍|过肩|主观视角|POV|static|locked[- ]?off|handheld|dolly|push(?:es)? in|pull(?:s)? back|pan|tilt|track(?:ing)?|crane|pedestal|orbit|arc|overhead|high angle|low angle|eye[- ]?level|side angle|over[- ]?the[- ]?shoulder|OTS)/i.test(current.line)) {
+    if (!/(固定|手持|推|拉|摇|移|跟|升|降|环绕|俯拍|仰拍|平视|侧拍|过肩|主观视角|POV|static|locked[- ]?off|handheld|dolly|push(?:es)? in|pull(?:s)? back|pan|tilt|track(?:ing)?|crane|pedestal|orbit|arc|overhead|high angle|low angle|eye[- ]?level|side angle|over[- ]?the[- ]?shoulder|OTS)/i.test(current.segmentText)) {
       errors.push(`${shotLabel}: missing angle, viewpoint, or camera movement`);
     }
 
@@ -1243,7 +1265,7 @@ clips.forEach((clip, index) => {
     }
 
     const explicit = extractExplicitAnnotation(current.segmentText);
-    const actionLine = maskDialogueContent(current.line);
+    const actionLine = maskDialogueContent(current.fieldFormat ? current.segmentText : current.line);
     world = applySegment(world, actionLine, entityAliases, shotLabel, explicit);
     stateTrace.push({ clip: clip.number, shot: current.number, start: current.start, end: current.end, explicit: Boolean(explicit), text: current.line, state: clone(world) });
   }
@@ -1266,9 +1288,9 @@ clips.forEach((clip, index) => {
 
   const spatialRe = /(左右|前后|上下|一侧|对面|居中|中央|中间|角落|门口|窗口|床边|桌前|楼梯|台阶|前景|后景|纵深|较高|较低|上部|下部|朝向|面向|位于|站在|坐在|立于|蹲|俯视|仰视|贴着|靠着|正前|下缘|上缘|低位|高处|远处|近处|frame left|frame right|screen left|screen right|foreground|midground|background|facing|left side|right side|center of the frame|near the camera|far from the camera)/i;
   if (!spatialText) {
-    errors.push(`${label}: missing 空间站位 block`);
+    errors.push(`${label}: missing 初始状态/空间站位 block`);
   } else if (!spatialRe.test(spatialText)) {
-    errors.push(`${label}: 空间站位 lacks an explicit screen-side/spatial relation (左右/前后/一侧/纵深/窗前/高处/正前) — position cannot be verified`);
+    errors.push(`${label}: 初始状态/空间站位 lacks an explicit screen-side/spatial relation (左右/前后/一侧/纵深/窗前/高处/正前) — position cannot be verified`);
   }
 
   const bodyForActionHeuristics = maskDialogueContent(body);
@@ -1324,7 +1346,7 @@ clips.forEach((clip, index) => {
     }
   }
 
-  const endingMatch = body.match(/^(?:结尾状态|Ending state)[:：]\s*(.+)$/mi);
+  const endingMatch = body.match(/^(?:结尾状态|段尾定格帧\s*[＝=]\s*下一段起幅|Ending state|Freeze frame\s*=\s*next segment opening)[:：]\s*(.+)$/mi);
   const endingText = endingMatch ? endingMatch[1] : "";
   if (endingText) {
     world = applySegment(world, endingText, entityAliases, `${label} 结尾状态`, null);

@@ -53,7 +53,7 @@ Read only the references needed for the current request:
 - For failed generations or revision requests, read [references/failure-repair.md](references/failure-repair.md) and repair the narrowest responsible layer.
 - Before final rendering, read [references/output-schema.md](references/output-schema.md).
 - Use [references/golden-cases.md](references/golden-cases.md) only when a concrete pattern is needed; do not imitate its story content.
-- Follow [references/sample-output.md](references/sample-output.md) as the format baseline for the four-section delivery; it is a shape reference, never a story to reuse.
+- Follow [references/sample-output.md](references/sample-output.md) as the format baseline for the complete, uncompressed delivery; it is a shape reference, never a story to reuse.
 
 ## Core workflow
 
@@ -83,7 +83,7 @@ Read only the references needed for the current request:
 <!-- RULE:DETAIL.BY_FUNCTION -->
 - Shot-detail requirements follow shot function rather than a universal checklist. Performance/dialogue shots use the three-detail check (环境压力 + 身体微动作 + 声音锚点). Action shots prioritize force/contact/displacement/recovery plus a readable sound or material response. Inserts/details require a clear story function and visible state change. Decisive or held shots should land on a clear destination image; transitional micro-shots only need an unambiguous hand-off to the next shot. Every shot still carries at least one sourced, in-size, story-serving detail. See `detail.md`.
 <!-- RULE:PROMPT.LAYERS -->
-- **Ten-layer completeness.** A finished prompt carries all ten layers: hard spec, facts, durable state, action, camera, visible detail, sound (ambience floor + material action + body), time, named prohibitions, and compression order. The thin layers are durable state, visible detail, sound floor, inner beats, and named prohibitions — check those before delivering. Beats belong inside a long block (`0-1秒：……；1-2.5秒：……`); the unit's last shot states the freeze frame the next unit starts from; constraints name the specific deformation this scene invites rather than generic quality words. When a prompt runs too long, compress in the order given by `prompt-anatomy.md`. See `prompt-anatomy.md`.
+- **Ten-layer completeness.** A finished prompt carries all ten layers: hard spec, facts, durable state, action, camera, visible detail, sound (ambience floor + material action + body), time, named prohibitions, and an explicit no-loss delivery pass. The thin layers are durable state, visible detail, sound floor, inner beats, and named prohibitions — check those before delivering. Beats belong inside a long block (`0-1秒：……；1-2.5秒：……`); the unit's last shot states the freeze frame the next unit starts from; constraints name the specific deformation this scene invites rather than generic quality words. Do not compress the default delivery or delete a rule's concrete execution evidence because the prompt is long. Use the compression order in `prompt-anatomy.md` only when the user explicitly requests a concise derivative. See `prompt-anatomy.md`.
 <!-- RULE:VOICE.IDENTITY -->
 - **Voice identity anchor.** Every speaking character carries one voice anchor in the asset card (音色、说话底速、口音咬字、气息、口头习惯, three to five words). Per-line delivery writes only the relative change against it. The anchor is durable state: it survives cuts and changes only with a shown cause. See `sound-direction.md`.
 <!-- RULE:DIALOGUE.TIMING -->
@@ -107,19 +107,33 @@ Read only the references needed for the current request:
 
 ## Output contract
 
-Return exactly four functional sections unless the user asks for analysis or requests a narrow repair. Localize the section labels to the output language. Open with one 怎么用 line (which sections are shared across Clips, which block is copied per Clip, what to scan before generating). Chinese defaults are:
+Return each independently generated segment as one complete, self-contained, uncompressed prompt. The visible structure follows the official Seedance-style information order while remaining model-adapter aware:
 
-1. `美术资产对照卡`
-2. `全局风格锁定`
-3. `视频生成提示词`
-4. `生成前提醒` — at most three bullets; mandatory model-defect safety reminders do not count toward this limit
+1. segment header and source range
+2. `素材说明` / `Material references`
+3. `一句话概述` / `One-sentence overview`
+4. `具体情节` / `Timed scene`
+5. `全局补充` / `Global facts and prohibitions`
 
-For English output, use natural equivalents such as `Asset Reference Card / Global Style Lock / Video Generation Prompt / Preflight Notes`; do not mix languages merely to preserve a heading.
+Inside `具体情节`, render one `初始状态` block, timestamped shots, and one `段尾定格帧＝下一段起幅` line. Each shot exposes the concrete results of every applicable rule instead of delegating judgment to the video model. Use these functional fields when applicable:
 
-When the selected adapter compiles a machine-facing prompt layer (for example MiniMax H3), deliver that layer as one clearly marked copy-ready block inside `视频生成提示词`, keep the readable director plan visible beside it, and never blend the two grammars in one block. State the delivery form — which block the user copies, how reference numbers bind — in the opening 怎么用 line. See `sample-output.md` for the shape.
+- `状态变化` — the information, emotion, tactical, spatial, physical, or decision state earned by the shot
+- `承接与状态` — incoming world state, unfinished action/audio, and one cut mechanism
+- `画面动作` — causal visible action or performance, including contact/force/recovery when physical action drives the shot
+- `摄影机` — size, height/view, axis side, relative angle/size change, one dominant move, start→path→landing, speed, and physical response
+- `可见细节与光影` — sourced in-size detail, focus/depth relation, motivated light behavior, and any caused change
+- `台词与声音` — verbatim line, open/close/breath timing, voice-anchor delta, OS/VO mouth behavior when model-scoped, and the three sound layers
+- `镜头落点` — outgoing position, posture, gaze, hands, props, injury, motion, emotional exposure, and audio tail needed by the next shot
+- `本镜禁止` — shot-specific named failure risks; omit only when no real shot-specific risk exists
 
-For alternative durations or aspect ratios, share the asset card and global style once, then provide clearly labeled variants. Do not duplicate unchanged global text inside every Clip.
+Do not output abstract rules such as `遵守30度规则`, `注意连续性`, or `增强打击感` in place of execution. Calculate and write the result: concrete camera positions and angle delta, inherited state, force/contact/displacement/recovery, exact focus relation, or timed dialogue behavior. Keep the full evidence even when it repeats a durable fact needed at the cut.
 
-Do not expose internal beat scoring, continuity JSON, validator internals, or hidden reasoning. Optional `CONTINUITY` HTML annotations belong only in an internal/saved validation artifact and must not be included in the normal user-facing prompt or sent to the video model.
+`全局补充` contains hard specs, durable facts that truly span the unit, allowed sound scope, and global named prohibitions. It does not replace per-shot execution. Do not compress the default output. Only create a concise derivative when the user explicitly asks, and label it as a derivative that does not replace the full rule-auditable version.
 
-For a repair request, return only the revised Clip or shots plus up to three short repair notes; do not repeat unchanged global sections.
+For adapters with a separate machine grammar (for example MiniMax H3), keep the full readable plan and add one clearly marked compiled machine-facing block; never blend the grammars. State which block is copied and how references bind.
+
+For alternative durations or aspect ratios, provide separately labeled, self-contained variants. Preserve the same story facts and outgoing state, but write ratio-specific initial staging and shots.
+
+Do not expose internal beat scoring, continuity JSON, validator internals, hidden calculations, or chain-of-thought. Optional `CONTINUITY` HTML annotations belong only in an internal/saved validation artifact and must not be included in the normal user-facing prompt or sent to the video model.
+
+For a repair request, return only the revised segment or shots plus the minimum affected incoming/outgoing state. Do not repeat unaffected segments.

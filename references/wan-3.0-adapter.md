@@ -28,7 +28,7 @@ Chronological causal prose may rewrite our wording, but it must not drop: durabl
 
 ## Compression and risk control
 
-Prefer fewer complete action units over dense cut counts. Concentrate constraints on identity, hand/prop ownership, screen direction, contact, and ending state. If the chosen Wan interface exposes different duration or asset limits, follow the interface and note the assumption in `生成前提醒`.
+Prefer fewer complete action units over dense cut counts. Concentrate constraints on identity, hand/prop ownership, screen direction, contact, and ending state. If the chosen Wan interface exposes different duration or asset limits, follow the interface and note the assumption in the segment header or `全局补充`.
 
 ## Field observations (user-paid generations, 2026-08)
 

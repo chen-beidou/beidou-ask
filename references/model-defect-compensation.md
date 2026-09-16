@@ -21,7 +21,7 @@ When the audio is narration or an off-screen line, visible characters still mout
   `XX嘴巴自然闭合，无口型，无说话动作，表情与呼吸正常。`
 - Do not rely on global instructions; repeat the closed-mouth fact inside the shot line or the constraint block of that Clip.
 - MiniMax H3 only: off-screen narration must NOT be placed in a `<d>` dialogue block — that block commands on-screen speech. Route narration through the soundscape/narration field instead.
-- Add one `生成前提醒` bullet noting that these constraints reduce but do not eliminate the defect; a re-roll is the fallback and is not a storyboard error. This safety reminder is mandatory and does not count toward the three-bullet limit — it may never be dropped in order to stay within three bullets.
+- Add one short post-prompt safety note stating that these constraints reduce but do not eliminate the defect; a re-roll is the fallback and is not a storyboard error. This note is mandatory and may never be dropped for brevity.
 
 ## Validation hooks
 

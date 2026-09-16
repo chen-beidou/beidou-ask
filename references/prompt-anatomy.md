@@ -14,7 +14,7 @@ A complete prompt is built in ten layers. Each layer answers a question the mode
 | 7 | Sound | ambience floor + material action sound + body sound, plus dialogue | `sound-direction.md` |
 | 8 | Time | beats inside a time block, and the freeze frame the next unit starts from | `output-schema.md` |
 | 9 | Named prohibitions | the specific deformation this shot invites — not generic quality words | `output-schema.md` constraint block |
-| 10 | Compression order | what to cut first when the prompt is too long, and what may never be cut | below |
+| 10 | No-loss delivery | whether every applicable rule has visible execution evidence; compression is allowed only for an explicitly requested derivative | below |
 
 ## Priority when layers compete
 
@@ -22,9 +22,9 @@ Narrative fact > durable state > dialogue > blocking/axis > action causality > c
 
 Detail and sound lose to story. A beautifully described material that fights the blocking or buries the line gets cut, not kept.
 
-## Compression order
+## Compression order — explicit concise derivative only
 
-When the prompt exceeds the target model's comfortable length, remove in this order:
+The default delivery is uncompressed. Never delete rule execution evidence merely because the prompt is long. When the user explicitly requests a concise derivative, remove in this order:
 
 1. repeated camera wording
 2. repeated light/style description

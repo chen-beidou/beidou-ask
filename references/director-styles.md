@@ -6,7 +6,7 @@ A director style is a **unified lens** that coerces every shot's composition, ca
 
 - Style is a **lens, not a rewrite**: narrative facts, dialogue, blocking logic, and continuity are unchanged.
 - Apply **one** style per Clip/project; do not mix two looks.
-- State the style once in `全局风格锁定` (optional line), not per shot.
+- State the style once in `一句话概述`, with durable style/light facts in `全局补充`; do not repeat unchanged style per shot.
 - If the target model resists the style (e.g. H3 struggles with anamorphic color), degrade the style cues to the layer the model obeys.
 
 ## Style menu (choose one)

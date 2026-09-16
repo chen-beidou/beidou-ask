@@ -13,8 +13,8 @@ Light is a controllable fact, not ambience. The model renders visible light beha
 
 | Layer | Carries |
 |---|---|
-| 全局风格锁定 | the film-wide light signature once: source family, color, contrast |
-| 空间站位 | the scene's current light state: which side the key light sits, which way shadows fall |
+| 一句话概述 / 全局补充 | the film-wide light signature once: source family, color, contrast |
+| 初始状态 | the scene's current light state: which side the key light sits, which way shadows fall |
 | 镜头行 | only light facts this shot can see: a shadow edge moving, a face crossing into light, a lamp switching, a passing reflection |
 | 决定性镜头 | may land one **light event** — 灯闪、影扫过脸、走进光里、逆光剪影成形 — written as visible action, not as an adjective |
 

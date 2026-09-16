@@ -53,4 +53,4 @@ Ask only if at least one of these is unknowable and alternatives would create di
 - Whether a critical action succeeds.
 - Which mutually exclusive ending is required.
 
-Otherwise proceed with defaults and state material assumptions in `生成前提醒`.
+Otherwise proceed with defaults and state material assumptions in the segment header or `全局补充`.
